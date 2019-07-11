@@ -1,16 +1,33 @@
 package com.cafe24.pjshop.vo;
 
+import org.hibernate.validator.constraints.*;
+
 public class UserVo {
 
 	private Long no;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotEmpty
+	@Length(min = 4, max = 12)
 	private String id;
+	
+	@Length(min = 8, max = 16)
 	private String password;
+	
 	private String regDate;
+	@NotEmpty
 	private String phoneNumber;
+	
 	private int age;
+	
+	@NotEmpty
 	private String address;
+	
+	@NotEmpty
 	private String email;
+	
 	private int point;
 	private int ordercount;
 	
