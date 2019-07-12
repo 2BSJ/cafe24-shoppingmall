@@ -86,4 +86,9 @@
 
 * UserController  
 <img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>
+	* 아이디존재여부  
+	 `get`  
+	 `/api/user/checkid`
+	 `param` = `String id`
+	* 회원가입 `get
 
