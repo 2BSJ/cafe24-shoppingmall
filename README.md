@@ -95,21 +95,24 @@
 `post`  
 `/api/user/join`  
 `param` = `UserVo`  
+---
+<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>  
 
-<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>    
-* 회원 로그인   
+* 회원 로그인  
 `post`  
 `/api/user/login`  
 `param` = `String id`
 `param` = `String password`
-
+---
 <img src='./Readme image/회원로그아웃 시퀀스다이어그램.PNG'>  
+
 * 회원 로그아웃  
 `post`  
 `/api/user/logout`  
 `param` = `UserVo`
-
+---
 <img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+
 * 회원정보수정  
 `put`  
 `/api/user/modify`  
