@@ -61,6 +61,8 @@ public class UserControllerTest {
 	
 	@Test
 	public void testGetJoin() throws Exception{
+		
+		//=====================성공case==================
 		ResultActions resultActions;
 		resultActions = 
 		mockMvc.perform(get("/api/user/join/idcheck")
@@ -72,7 +74,7 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)));
 		
-		//=====================성공case==================
+		//=====================실패case==================
 		
 		resultActions = 
 		mockMvc.perform(get("/api/user/join/idcheck")
@@ -85,6 +87,9 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.data", is(false)));		
 		
 	}
+	
+//	@Test
+//	public void test
 	
 	
 	

@@ -3,12 +3,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.cafe24.pjshop.vo.UserVo"/>
-		<typeAlias alias="guestbookvo" type="com.cafe24.pjshop.vo.GuestbookVo"/>
-		<typeAlias alias="boardvo" type="com.cafe24.pjshop.vo.BoardVo"/>
     	</typeAliases>	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
-		<mapper resource="com/cafe24/config/app/mybatis/mappers/guestbook.xml" />
-		<mapper resource="com/cafe24/config/app/mybatis/mappers/board.xml"/>
 	</mappers>
 </configuration>

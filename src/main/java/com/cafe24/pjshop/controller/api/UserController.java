@@ -3,6 +3,8 @@ package com.cafe24.pjshop.controller.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,15 +28,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@ApiOperation(value = "회원가입 페이지 이동", notes = "회원가입 페이지 이동API")
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public JSONResult join_form() {
-		// JSON 리턴 생성
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("forward", "join/join_form");
-		return JSONResult.success(dataMap);
-	}
-	
 	@ApiOperation(value = "회원가입", notes = "회원가입 API")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public JSONResult join() {
@@ -44,15 +37,18 @@ public class UserController {
 		return JSONResult.success(dataMap);
 	}
 	
-	@ApiOperation(value="아이디 존재 여부", notes ="아이디체크 API")
+	@ApiOperation(value="아이디 존재 여부", notes ="아이디체크 API, checkid=success")
 	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
 	
 	public JSONResult checkid(@RequestParam(value="id",required=true) String id) {
-		Boolean exist = true; //userService.existEmail(id);
-		if(exist == false)
+		if("success".equals(id)) {//userService.existEmail(id);
 			return JSONResult.fail("아이디가 존재합니다");
-		else
-			return JSONResult.success(exist);	
+			
+		}
+		else {
+			return JSONResult.success("아이디 사용가능");	
+		}
+			
 	}
 	
 }
