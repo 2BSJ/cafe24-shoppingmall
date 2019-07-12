@@ -34,7 +34,7 @@
 #### pjshop.dto
   * JSONResult - Json Class 정의  
    **result,message,(Object)data**  
-   `성공,실패시 result에 success,fail 삽입`    
+   `성공,실패시 result에 success,fail 삽입`
    `성공시 data에 Object 삽입 message에 null값 넣은뒤 JSONResult return`  
    `실패시 data에 null 삽입 message에 실패메세지 넣은뒤 JSONResult return`
 
@@ -79,16 +79,38 @@
   * PaymentVo
   * ReviewVo
   * UserVo
-  
+
 ## src/test/java 구성중...
 
 ## Swagger API
 
-* UserController  
-<img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>
-	* 아이디존재여부  
-	 `get`  
-	 `/api/user/checkid`
-	 `param` = `String id`
-	* 회원가입 `get
+#### UserController  
+<img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>  
 
+* ID중복체크요청  
+`get`
+`/api/user/checkid`  
+`param` = `String id`  
+* 회원가입  
+`post`  
+`/api/user/join`  
+`param` = `UserVo`  
+
+<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>  
+* 회원 로그인  
+`post`  
+`/api/user/login`  
+`param` = `String id`
+`param` = `String password`
+
+<img src='./Readme image/회원로그아웃 시퀀스다이어그램.PNG'>  
+* 회원 로그아웃  
+`post`  
+`/api/user/logout`  
+`param` = `UserVo`
+
+<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+* 회원정보수정  
+`put`  
+`/api/user/modify`  
+`param` = `UserVo`
