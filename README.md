@@ -34,7 +34,7 @@
 #### pjshop.dto
   * JSONResult - Json Class 정의  
    **result,message,(Object)data**  
-   `성공,실패시 result에 success,fail 삽입`
+   `성공,실패시 result에 success,fail 삽입`  
    `성공시 data에 Object 삽입 message에 null값 넣은뒤 JSONResult return`  
    `실패시 data에 null 삽입 message에 실패메세지 넣은뒤 JSONResult return`
 
@@ -109,7 +109,7 @@
 * 회원 로그아웃  
 `post`  
 `/api/user/logout`  
-`param` = `UserVo`
+`param` = `없음`
 ---
 <img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
 
@@ -117,3 +117,17 @@
 `put`  
 `/api/user/modify`  
 `param` = `UserVo`
+---
+<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+
+* 장바구니담기  
+`post`  
+`/api/user/cart`  
+`param` = `Long no`
+---
+<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+
+* 장바구니삭제
+`delete`  
+`/api/user/cart`  
+`param` = `Long no`

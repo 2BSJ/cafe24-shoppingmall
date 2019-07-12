@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.pjshop.repository.UserDao;
+import com.cafe24.pjshop.vo.ProductVo;
 import com.cafe24.pjshop.vo.UserVo;
 
 @Service
@@ -38,6 +39,16 @@ public class UserService {
 
 	public boolean modify(UserVo userVo) {
 		//
+		return true;
+	}
+
+	public boolean addcart(Long no) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean deletecart(Long no) {
+		// TODO Auto-generated method stub
 		return true;
 	}
 

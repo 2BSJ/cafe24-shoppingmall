@@ -1,8 +1,45 @@
 package com.cafe24.pjshop.controller.api;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("ProductAPIController") //유저컨트롤러로 두개의 클래스가 만들어져 컨테이너안에서 id값이 중복되기떄문에
-public class ProductController {
+import com.cafe24.pjshop.dto.JSONResult;
+import com.cafe24.pjshop.service.ProductService;
+import com.cafe24.pjshop.vo.ProductVo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@RestController("ProductAPIController") 
+@RequestMapping("/api/product")
+@Api(value = "ProductController", description ="상품 컨트롤러")
+
+public class ProductController {
+	
+	@Autowired
+	private ProductService productService;
+	
+	@ApiOperation(value="상품 목록 조회", notes ="상품목록조회API")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public JSONResult list() {
+		List<ProductVo> productList = new ArrayList<ProductVo>();
+		productList = productService.list();
+		Map<String,Object> data = new HashMap<String,Object>();
+		data.put("productList",productList);
+		if(productList != null) {	
+			return JSONResult.success(data);
+		}
+		else {
+			return JSONResult.fail("가져온 리스트가 없음");	
+		}
+			
+	}
+	
 }

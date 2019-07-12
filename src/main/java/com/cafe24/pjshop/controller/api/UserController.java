@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.service.UserService;
+import com.cafe24.pjshop.vo.ProductVo;
 import com.cafe24.pjshop.vo.UserVo;
 
 import io.swagger.annotations.Api;
@@ -96,7 +97,7 @@ public class UserController {
 	
 	@ApiOperation(value="회원정보수정", notes ="회원정보수정 API")
 	@RequestMapping(value = "/modify", method = RequestMethod.PUT)
-	public JSONResult modify(UserVo userVo) {
+	public JSONResult modify(@ModelAttribute @Valid UserVo userVo) {
 		
 		boolean result = userService.modify(userVo);
 		if(result) {
@@ -104,6 +105,34 @@ public class UserController {
 		}
 		else {
 			return JSONResult.fail("modify fail");
+		}
+		
+	}
+	
+	@ApiOperation(value="장바구니담기", notes ="장바구니담기 API")
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
+	public JSONResult addcart(@RequestParam(value="no",required=true) Long no) {
+		
+		boolean result = userService.addcart(no);
+		if(result) {
+			return JSONResult.success("addcart success");
+		}
+		else {
+			return JSONResult.fail("addcart fail");
+		}
+		
+	}
+	
+	@ApiOperation(value="장바구니삭제", notes ="장바구니삭제 API")
+	@RequestMapping(value = "/cart", method = RequestMethod.DELETE)
+	public JSONResult deletecart(@RequestParam(value="no",required=true) Long no) {
+		
+		boolean result = userService.deletecart(no);
+		if(result) {
+			return JSONResult.success("deletecart success");
+		}
+		else {
+			return JSONResult.fail("deletecart fail");
 		}
 		
 	}
