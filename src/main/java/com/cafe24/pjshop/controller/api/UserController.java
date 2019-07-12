@@ -82,10 +82,7 @@ public class UserController {
 	
 	@ApiOperation(value="회원 로그아웃", notes ="로그아웃 API")
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public JSONResult logout(
-			@RequestParam(value="id",required=true) String id,
-			@RequestParam(value="password",required=true) String password,
-			HttpSession session){
+	public JSONResult logout(HttpSession session){
 		
 		if(session.getAttribute("authUser") != null) {
 			session.removeAttribute("authUser");
