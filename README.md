@@ -96,8 +96,8 @@
 `/api/user/join`  
 `param` = `UserVo`  
 
-<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>  
-* 회원 로그인  
+<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>    
+* 회원 로그인   
 `post`  
 `/api/user/login`  
 `param` = `String id`
