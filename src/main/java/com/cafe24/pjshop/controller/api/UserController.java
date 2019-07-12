@@ -28,27 +28,25 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@ApiOperation(value = "회원가입", notes = "회원가입 API")
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public JSONResult join() {
-		// JSON 리턴 생성
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		dataMap.put("forward", "join/join_form");
-		return JSONResult.success(dataMap);
-	}
 	
 	@ApiOperation(value="아이디 존재 여부", notes ="아이디체크 API, checkid=success")
 	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
-	
 	public JSONResult checkid(@RequestParam(value="id",required=true) String id) {
-		if("success".equals(id)) {//userService.existEmail(id);
+		boolean result = userService.checkId(id);
+		
+		if(result) {	
 			return JSONResult.fail("아이디가 존재합니다");
-			
 		}
 		else {
 			return JSONResult.success("아이디 사용가능");	
 		}
 			
 	}
+	
+	@ApiOperation(value="회원가입", notes ="회원가입 API")
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	
+	public JSONResult join()
+	
 	
 }

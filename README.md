@@ -79,3 +79,11 @@
   * PaymentVo
   * ReviewVo
   * UserVo
+  
+## src/test/java 구성중...
+
+## Swagger API
+
+* UserController  
+<img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>
+
