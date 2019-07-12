@@ -118,14 +118,14 @@
 `/api/user/modify`  
 `param` = `UserVo`
 ---
-<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+ 
 
 * 장바구니담기  
 `post`  
 `/api/user/cart`  
 `param` = `Long no`
 ---
-<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
+
 
 * 장바구니삭제
 `delete`  
