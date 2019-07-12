@@ -32,10 +32,10 @@
   * UserController
 
 #### pjshop.dto
-  * JSONResult - Json Class 정의
-   **result,message,(Object)data**
-   `성공,실패시 result에 success,fail 삽입`  
-   `성공시 data에 Object 삽입 message에 null값 넣은뒤 JSONResult return`
+  * JSONResult - Json Class 정의  
+   **result,message,(Object)data**  
+   `성공,실패시 result에 success,fail 삽입`    
+   `성공시 data에 Object 삽입 message에 null값 넣은뒤 JSONResult return`  
    `실패시 data에 null 삽입 message에 실패메세지 넣은뒤 JSONResult return`
 
 #### pjshop.repository
