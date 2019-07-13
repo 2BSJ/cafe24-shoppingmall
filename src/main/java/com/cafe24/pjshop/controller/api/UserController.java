@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,8 +111,9 @@ public class UserController {
 	}
 	
 	@ApiOperation(value="장바구니담기", notes ="장바구니담기 API")
-	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public JSONResult addcart(@RequestParam(value="no",required=true) Long no) {
+	@RequestMapping(value = "/cart/{no}", method = RequestMethod.POST)
+	public JSONResult addcart(
+			@PathVariable(value="no") Long no) {
 		
 		boolean result = userService.addcart(no);
 		if(result) {
@@ -124,8 +126,9 @@ public class UserController {
 	}
 	
 	@ApiOperation(value="장바구니삭제", notes ="장바구니삭제 API")
-	@RequestMapping(value = "/cart", method = RequestMethod.DELETE)
-	public JSONResult deletecart(@RequestParam(value="no",required=true) Long no) {
+	@RequestMapping(value = "/cart/{no}", method = RequestMethod.DELETE)
+	public JSONResult deletecart(
+			@PathVariable(value="no") Long no) {
 		
 		boolean result = userService.deletecart(no);
 		if(result) {

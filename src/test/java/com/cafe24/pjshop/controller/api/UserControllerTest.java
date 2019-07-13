@@ -65,7 +65,7 @@ public class UserControllerTest {
 		//=====================성공case==================
 		ResultActions resultActions;
 		resultActions = 
-		mockMvc.perform(get("/api/user/join/idcheck")
+		mockMvc.perform(get("/api/user/idcheck")
 		.param("id", "test_success")
 		.contentType(MediaType.APPLICATION_JSON));
 		
@@ -77,7 +77,7 @@ public class UserControllerTest {
 		//=====================실패case==================
 		
 		resultActions = 
-		mockMvc.perform(get("/api/user/join/idcheck")
+		mockMvc.perform(get("/api/user/idcheck")
 		.param("id", "test_fail")
 		.contentType(MediaType.APPLICATION_JSON));
 				

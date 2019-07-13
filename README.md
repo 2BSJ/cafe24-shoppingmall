@@ -83,7 +83,7 @@
 ## src/test/java 구성중...
 
 ## Swagger API - localhost:8080/cafe24-shoppingmall/swagger-ui.html
-
+<img src='./Readme image/api목록.PNG
 #### UserController  
 <img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>  
 
