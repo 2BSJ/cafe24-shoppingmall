@@ -17,6 +17,7 @@ public class UserService {
 	
 	public Boolean checkId(String id) {
 		
+		//get
 		if("testid".equals(id))
 			return true;
 		else
@@ -25,7 +26,7 @@ public class UserService {
 
 	public boolean join(UserVo userVo) {
 		
-		//
+		//post
 		return true;
 	}
 

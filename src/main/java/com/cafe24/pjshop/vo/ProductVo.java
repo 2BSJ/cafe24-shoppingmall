@@ -1,5 +1,8 @@
 package com.cafe24.pjshop.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductVo {
 
 	private Long no;
@@ -16,6 +19,29 @@ public class ProductVo {
 	private String title_status;
 	private String coupon_status;
 	private Long category_no;
+	
+	public ProductVo(Long no,String name,String simple_description,String description,
+					String manufacture, int buycount, int price,int deliverycost,
+					String display_status,String sales_status,String special_status, String title_status,
+					String coupon_status,Long category_no) {
+		this.no = no;
+		this.name = name;
+		this.simple_description = simple_description;
+		this.description = description;
+		this.manufacture = manufacture;
+		this.buycount = buycount;
+		this.price = price;
+		this.deliverycost = deliverycost;
+		this.display_status = display_status;
+		this.sales_status = sales_status;
+		this.special_status = special_status;
+		this.title_status = title_status;
+		this.coupon_status = coupon_status;
+		this.category_no = category_no;
+	}
+	
+
+	
 	public Long getNo() {
 		return no;
 	}
