@@ -43,12 +43,13 @@ public class UserService {
 	}
 
 	public boolean addcart(Long no) {
-		// TODO Auto-generated method stub
+		// sqlSession.selectOne("
+		// sqlSession.selectOne("user.checkreply",no);
 		return true;
 	}
 
 	public boolean deletecart(Long no) {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 
