@@ -42,7 +42,7 @@ public class OrderController {
 	}
 	
 	//주문 내역
-	@ApiOperation(value="상품 주문", notes ="상품 주문API")
+	@ApiOperation(value="주문 내역", notes ="주문 내역API")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JSONResult list(
 			@RequestParam(value="no",required=true) Long userNo) {	
