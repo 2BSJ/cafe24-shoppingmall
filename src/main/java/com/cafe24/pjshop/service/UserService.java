@@ -18,7 +18,7 @@ public class UserService {
 	public Boolean checkId(String id) {
 		
 		//get
-		if("testid".equals(id))
+		if("test_can_not_use_id".equals(id))
 			return true;
 		else
 			return false;

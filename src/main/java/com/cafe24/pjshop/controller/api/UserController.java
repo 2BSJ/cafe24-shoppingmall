@@ -1,14 +1,20 @@
 package com.cafe24.pjshop.controller.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.service.UserService;
-import com.cafe24.pjshop.vo.ProductVo;
 import com.cafe24.pjshop.vo.UserVo;
 
 import io.swagger.annotations.Api;
@@ -50,11 +55,19 @@ public class UserController {
 	
 	@ApiOperation(value="회원가입", notes ="회원가입 API")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public JSONResult join(@ModelAttribute @Valid UserVo userVo) {
+	public ResponseEntity<JSONResult> join(@RequestBody @Valid UserVo userVo,BindingResult result) {
 		//@valid이외 정규식 필요한 UserVo
-		boolean result = userService.join(userVo);
-		return JSONResult.success(result+", redirect /api/user/joinsuccess");
+		if( result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for(ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
 		
+		//boolean result = userService.join(userVo);
+		//return JSONResult.success(result+", redirect /api/user/joinsuccess");
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("성공"));
+
 	}
 	
 	@ApiOperation(value="회원 로그인", notes ="로그인 API")

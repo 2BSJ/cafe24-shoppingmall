@@ -1,31 +1,36 @@
 package com.cafe24.pjshop.vo;
 
-import org.hibernate.validator.constraints.*;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.cafe24.pjshop.validator.constraints.ValidEmail;
+import com.cafe24.pjshop.validator.constraints.ValidId;
+import com.cafe24.pjshop.validator.constraints.ValidName;
+import com.cafe24.pjshop.validator.constraints.ValidPassword;
+import com.cafe24.pjshop.validator.constraints.ValidPhone;
 
 public class UserVo {
 
 	private Long no;
 	
-	@NotEmpty
+	@ValidName
 	private String name;
 	
-	@NotEmpty
-	@Length(min = 4, max = 12)
+	@ValidId
 	private String id;
 	
-	@Length(min = 8, max = 16)
+	@ValidPassword
 	private String password;
 	
 	private String regDate;
-	@NotEmpty
+	
+	@ValidPhone
 	private String phoneNumber;
 	
 	private int age;
 	
-	@NotEmpty
 	private String address;
 	
-	@NotEmpty
+	@ValidEmail
 	private String email;
 	
 	private int point;
