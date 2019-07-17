@@ -1,7 +1,5 @@
 package com.cafe24.pjshop.vo;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.cafe24.pjshop.validator.constraints.ValidEmail;
 import com.cafe24.pjshop.validator.constraints.ValidId;
 import com.cafe24.pjshop.validator.constraints.ValidName;

@@ -6,7 +6,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.cafe24.pjshop.validator.constraints.ValidEmail;
-import com.cafe24.pjshop.validator.constraints.ValidPassword;
 
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 	   private Pattern pattern = Pattern.compile("^[a-z0-9_+.-]+@([a-z0-9-]+\\.)+[a-z0-9]{2,4}$");

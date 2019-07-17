@@ -1,15 +1,12 @@
 package com.cafe24.pjshop.controller.api;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.pjshop.dto.JSONResult;
-import com.cafe24.pjshop.vo.ProductVo;
+
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

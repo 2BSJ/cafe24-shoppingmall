@@ -6,7 +6,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.cafe24.pjshop.validator.constraints.ValidId;
-import com.cafe24.pjshop.validator.constraints.ValidPhone;
 
 
 //영어로시작하고 총 5글자 이상 10글자 이하의 아이디 특수문자 불가함
