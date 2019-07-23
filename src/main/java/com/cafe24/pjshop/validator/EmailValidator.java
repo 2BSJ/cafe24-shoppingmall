@@ -8,8 +8,8 @@ import javax.validation.ConstraintValidatorContext;
 import com.cafe24.pjshop.validator.constraints.ValidEmail;
 
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
-	   private Pattern pattern = Pattern.compile("^[a-z0-9_+.-]+@([a-z0-9-]+\\.)+[a-z0-9]{2,4}$");
-	   
+	   private Pattern pattern = Pattern.compile("^[a-z]+[a-z0-9_+.-]+@([a-z0-9-]+\\.)+[a-z0-9]{2,4}$");
+	   //영문자로 시작하는 email id + @ + 영문자 + . + 영문자로 끝나는 이메일
 
 	   @Override
 	   public void initialize(ValidEmail constraintAnnotation) {

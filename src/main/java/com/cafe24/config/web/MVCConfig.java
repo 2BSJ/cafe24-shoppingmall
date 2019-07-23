@@ -12,12 +12,14 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.cafe24.pjshop.security.AuthUserHandlerMethodArgumentResolver;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 @Configuration
@@ -83,6 +85,21 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 			converters.add(mappingJackson2HttpMessageConverter()); //두개가 이써서 빈에서 생성하고 밑에도 만들어지는거 아니냐? 이게아니라 위에서 컨테이너에 빈이 생성되고 그 빈이 주입됨
 			converters.add(stringHttpMessageConverter());
 	}
+	
+	
+	//
+	//Argument Resolver
+	//
+	@Bean
+	public AuthUserHandlerMethodArgumentResolver authUserHandlerMethodArgumentResolver() {
+		return new AuthUserHandlerMethodArgumentResolver();
+	}
+	
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(authUserHandlerMethodArgumentResolver());
+	}
+	
 	
 	
 	

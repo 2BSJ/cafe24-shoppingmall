@@ -10,7 +10,7 @@ import com.cafe24.pjshop.validator.constraints.ValidId;
 
 //영어로시작하고 총 5글자 이상 10글자 이하의 아이디 특수문자 불가함
 public class IdValidator implements ConstraintValidator<ValidId, String> {
-   private Pattern pattern = Pattern.compile("^[a-z]+[a-z0-9]{5,10}$");
+   private Pattern pattern = Pattern.compile("^[a-z]+[a-z0-9]{4,10}$");
 	
 	
 
@@ -20,7 +20,7 @@ public class IdValidator implements ConstraintValidator<ValidId, String> {
 
    @Override
    public boolean isValid(String value, ConstraintValidatorContext context) {
-      if(value == null || "".contentEquals(value)) {
+      if(value == null || "".contentEquals(value) || value.length() < 5) {
          return false;
       }
       

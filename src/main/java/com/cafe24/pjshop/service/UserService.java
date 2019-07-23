@@ -15,29 +15,22 @@ public class UserService {
 	
 	//sql Session
 	
-	public Boolean checkId(String id) {
+	public int checkId(String id) {
 		
-		//get
-		if("test_can_not_use_id".equals(id))
-			return true;
-		else
-			return false;
+		return userDao.countById(id);
 	}
 
-	public boolean join(UserVo userVo) {
+	public int join(UserVo userVo) {
 		
-		//post
-		return true;
+		return userDao.insertVo(userVo);	
 	}
 
-	public UserVo login(String id, String password) {
+	public UserVo login(UserVo userVo) {
 
-		UserVo authUserVo = new UserVo();
-		authUserVo.setId("testid");
-		authUserVo.setName("testname");
-		return authUserVo;
+		return userDao.getByIdAndPassword(userVo);
 	}
 
+	
 	public boolean modify(UserVo userVo) {
 		//
 		return true;

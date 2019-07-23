@@ -2,19 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 
-	<insert id="insert" parameterType="uservo">
-		<![CDATA[
-			insert 
-		      into user 
-		    values(null, #{name }, #{email }, #{password }, #{gender }, now())	
+	<select id="countById" resultType="int" parameterType='string'>
+		<![CDATA[	 
+		select count(*)
+		  from user 
+		 where id = #{id}
 		]]>
-		<selectKey keyProperty="no" resultType="long" order="AFTER">
-			<![CDATA[
-			select last_insert_id()
-			]]>
-		</selectKey>
+	</select>
+
+	<insert id="insertVo" parameterType="uservo">
+		<![CDATA[
+			INSERT 
+		   	INTO user 
+		   	VALUES(null, 
+		   		#{name},
+		   		#{id}, 
+		   		SHA2(#{password},512), 
+		   		now(), 
+		  		#{phoneNumber}, 
+		   		#{age}, 
+		   		AES_ENCRYPT(#{address},SHA2(#{key},512)), 
+		   		AES_ENCRYPT(#{email},SHA2(#{key},512)), 
+		   		#{gender},
+		   		0,
+		   		0,
+		   		#{role})	
+		]]>
 	</insert>
 
+	<select id="getByIdAndPassword" resultType="uservo"
+		parameterType='uservo'>
+		<![CDATA[	 		
+		SELECT no,name,id,reg_date as regDate,phone_number as phoneNumber,age,
+		convert(AES_DECRYPT(address, SHA2('${key}', 512)) using utf8) as address,
+		convert(AES_DECRYPT(email, SHA2('${key}',512)) using utf8) as email,
+		gender,point,ordercount,role
+		from user
+		where id = #{id}
+		and password=SHA2('${password}', 512);
+		]]>
+	</select>
+	
 	<select id="getByNo" resultType="uservo" parameterType='long'>
 		<![CDATA[	 
 		select no, name
@@ -31,15 +59,7 @@
 		]]>
 	</select>
 
-	<select id="getByEmailAndPassword" resultType="uservo"
-		parameterType='map'>
-		<![CDATA[	 
-		select no, name
-		  from user 
-		 where email=#{email } 
-		   and password=#{password }
-		]]>
-	</select>
+
 
 	<update id="update" parameterType="uservo">
 		<![CDATA[

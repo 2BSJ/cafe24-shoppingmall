@@ -31,13 +31,16 @@ public class UserVo {
 	@ValidEmail
 	private String email;
 	
+	private String gender;
 	private int point;
 	private int ordercount;
+	private String role; // default
+	private String key = "cafe";
 	
 	public UserVo() {}//기본생성자
-	
+	public UserVo(String id) {this.id=id;}
 	public UserVo(Long no,String name,String id,String password, String regDate,
-					String phoneNumber,int age,String address,String email,
+					String phoneNumber,int age,String address,String email,String gender,
 					int point,int ordercount) {
 		this.no = no;
 		this.name = name;
@@ -48,6 +51,7 @@ public class UserVo {
 		this.age = age;
 		this.address = address;
 		this.email = email;
+		this.gender = gender;
 		this.point= point;
 		this.ordercount = ordercount;
 	}
@@ -123,6 +127,14 @@ public class UserVo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	public int getPoint() {
 		return point;
@@ -139,6 +151,23 @@ public class UserVo {
 	public void setOrdercount(int ordercount) {
 		this.ordercount = ordercount;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	@Override
+	public String toString() {
+		return "UserVo [no=" + no + ", name=" + name + ", id=" + id + ", password=" + password + ", regDate=" + regDate
+				+ ", phoneNumber=" + phoneNumber + ", age=" + age + ", address=" + address + ", email=" + email
+				+ ", gender=" + gender + ", point=" + point + ", ordercount=" + ordercount + ", role=" + role + ", key="
+				+ key + "]";
+	}
+	
+	
+	
 	
 	
 }
