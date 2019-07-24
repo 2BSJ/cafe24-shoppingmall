@@ -34,16 +34,30 @@ public class UserService {
 	public int modify(UserVo userVo) {
 		return userDao.updateVo(userVo);
 	}
+	
+	public String findId(UserVo userVo) {
+		return userDao.findId(userVo);
+	}
+	
+	public int findPassword(UserVo userVo) {
+		return userDao.findPassword(userVo);
+	}
 
 	public boolean addcart(Long no) {
 		// sqlSession.selectOne("
 		// sqlSession.selectOne("user.checkreply",no);
 		return true;
 	}
+	
+	
 
 	public boolean deletecart(Long no) {
 
 		return true;
 	}
+
+
+
+
 
 }

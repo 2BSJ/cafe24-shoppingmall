@@ -4,17 +4,17 @@
 
 	<select id="countById" resultType="int" parameterType='string'>
 		<![CDATA[	 
-		select count(*)
-		  from user 
-		 where id = #{id}
+		SELECT count(*)
+		  FROM user 
+		 WHERE id = #{id}
 		]]>
 	</select>
 
 	<insert id="insertVo" parameterType="uservo">
 		<![CDATA[
-			INSERT 
-		   	INTO user 
-		   	VALUES(null, 
+		INSERT 
+		INTO user 
+		VALUES(null, 
 		   		#{name},
 		   		#{id}, 
 		   		SHA2(#{password},512), 
@@ -37,15 +37,17 @@
 		convert(AES_DECRYPT(address, SHA2('${key}', 512)) using utf8) as address,
 		convert(AES_DECRYPT(email, SHA2('${key}',512)) using utf8) as email,
 		gender,point,ordercount,role
-		from user
-		where id = #{id}
-		and password=SHA2(#{password}, 512);
+		
+		FROM user
+		
+		WHERE id = #{id}
+		AND password=SHA2(#{password}, 512);
 		]]>
 	</select>
 	
 	<update id="updateVo" parameterType="uservo">
 		<![CDATA[
-		update user
+		UPDATE user
 		]]>
 		<trim prefix="SET" suffixOverrides=",">
 		<if test="password != null">
@@ -65,29 +67,32 @@
 		</if>
 		<if test="phoneNumber != null">
 			<![CDATA[
-			phone_number=#{phoneNumber},
+			phone_number=#{phoneNumber}
 			]]>
 		</if>		   
 		<![CDATA[
-		 where no = #{no}      	 
+		 WHERE no = #{no}      	 
 		]]>
 		</trim>
 	</update>
 	
 	
-	<select id="getByNo" resultType="uservo" parameterType='long'>
+	<select id="getIdByNameAndEmail" parameterType='uservo' resultType="string">
 		<![CDATA[	 
-		select no, name
-		  from user 
-		 where no = #{value }
+		SELECT id
+		  FROM user 
+		 WHERE name = #{name}
+		   AND email = AES_ENCRYPT(#{email}, SHA2(#{key},512))
 		]]>
 	</select>
 
-	<select id="getByEmail" resultType="uservo" parameterType='string'>
+	<select id="getPasswordByIdAndEmailAndPhone" parameterType='uservo' resultType="int">
 		<![CDATA[	 
-		select no, name, email, gender
-		  from user 
-		 where email = #{value }
+		SELECT count(*)
+		  FROM user 
+		 WHERE id = #{id}
+		   AND email = AES_ENCRYPT(#{email}, SHA2(#{key},512))
+		   AND phone_number = #{phoneNumber}
 		]]>
 	</select>
 

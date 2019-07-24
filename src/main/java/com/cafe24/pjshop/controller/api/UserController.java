@@ -103,9 +103,8 @@ public class UserController {
 	}
 	
 	@ApiOperation(value="회원정보수정", notes ="회원정보수정 API")
-	@RequestMapping(value = "/{no}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/modify", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modify(
-			@PathVariable("no") Long no,
 			@RequestBody @Valid UserVo userVo,
 			BindingResult bindingResult){
 		
@@ -126,6 +125,52 @@ public class UserController {
 		
 	}
 	
+	@ApiOperation(value="회원 아이디 찾기", notes ="회원아이디찾기 API")
+	@RequestMapping(value = "/find/id", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> findId(
+			@RequestParam(value="name", required=true) String name,
+			@RequestParam(value="email", required=true) String email){
+		
+		UserVo userVo = new UserVo();
+		userVo.setName(name);
+		userVo.setEmail(email);
+		String findId;
+		if((findId = userService.findId(userVo)) != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(findId));
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("아이디를 찾지 못하였습니다."));
+		}
+		
+	}
+	
+	@ApiOperation(value="회원 패스워드 찾기", notes ="회원 패스워드 찾기 API")
+	@RequestMapping(value = "/find/password", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> findPassword(
+			@RequestParam(value="id", required=true) String id,
+			@RequestParam(value="email", required=true) String email,
+			@RequestParam(value="phone", required=true) String phone){
+		
+		UserVo userVo = new UserVo();
+		userVo.setId(id);
+		userVo.setEmail(email);
+		userVo.setPhoneNumber(phone);
+		
+		if(userService.findPassword(userVo) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("password를 email로 발송 완료"));
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("비밀번호를 찾지 못하였습니다."));
+		}
+		
+	}
+	
+	//=================================================
+	
+	
+	
+	
+// 구현 전
 	@ApiOperation(value="장바구니담기", notes ="장바구니담기 API")
 	@RequestMapping(value = "/cart/{no}", method = RequestMethod.POST)
 	public JSONResult addcart(

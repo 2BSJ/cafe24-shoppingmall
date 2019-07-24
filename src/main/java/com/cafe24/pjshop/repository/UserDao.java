@@ -30,6 +30,14 @@ public class UserDao {
 		return sqlSession.update("user.updateVo",userVo);
 	}
 
+	public String findId(UserVo userVo) {
+		return sqlSession.selectOne("user.getIdByNameAndEmail",userVo);
+	}
+
+	public int findPassword(UserVo userVo) {
+		return sqlSession.selectOne("user.getPasswordByIdAndEmailAndPhone",userVo);
+	}
+
 
 
 	

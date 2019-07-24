@@ -58,8 +58,6 @@ public class UserControllerTest {
 	@Test
 	public void testACheckid() throws Exception{
 		
-		//DB 데이터 삽입
-		//insertData();
 		ResultActions resultActions;
 		//=====================아이디가 중복체크 된 case==================
 		
@@ -112,8 +110,6 @@ public class UserControllerTest {
 	
 	@Test
 	public void testBJoin() throws Exception{
-		
-	//	insertData();
 		ResultActions resultActions;
 		
 		//1. 기본 join 가능 Data
@@ -208,7 +204,6 @@ public class UserControllerTest {
 	// 로그인 test
 	@Test
 	public void testCLogin() throws Exception{
-	//	insertData();
 		ResultActions resultActions;
 		UserVo userVo = new UserVo();		
 		
@@ -248,22 +243,25 @@ public class UserControllerTest {
 	// 회원정보수정
 	@Test
 	public void testDUpdate() throws Exception{
-	//	insertData();
 		ResultActions resultActions;
 		UserVo userVo = new UserVo();		
 		
 		//1. 업데이트 성공 케이스==================================
+		//수정불가 데이터
 		userVo.setNo(1L);
-		userVo.setName("양승준수정");
-		userVo.setEmail("yyg0825@naver.com");
-		userVo.setGender("남");
+		userVo.setName("양승준");
 		userVo.setId("yyg0825");
+		userVo.setGender("남");
+		
+		//수정가능 데이터
+		userVo.setAddress("경기도 남양주시 평내동");
+		userVo.setEmail("h3tmdwns@gmail.com");
 		userVo.setPhoneNumber("010-9136-4365");
 		userVo.setPassword("test123!!!!");
 		
 		resultActions =
 		mockMvc
-		.perform(put("/api/user/1")
+		.perform(put("/api/user/modify")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
@@ -271,11 +269,112 @@ public class UserControllerTest {
 		.andDo(print())
 		.andExpect(status().isOk());
 		
+		//2. 업데이트 실패 케이스====================================
+		//2.1 valid password 실패케이스
+		userVo.setPassword("test123");
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/user/modify")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest());
+		
+		//2.2 valid email 실패케이스
+		userVo.setEmail("123.com");
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/user/modify")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest());
 	}	
-	// 로그아웃 test-
 	
+	// 아이디 찾기
+	@Test
+	public void testEFindId() throws Exception{
+
+		ResultActions resultActions;		
+		
+		//1. Id찾기 성공 케이스==================================
+
+		resultActions =
+		mockMvc
+		.perform(get("/api/user/find/id")
+		.param("name", "양승준")
+		.param("email", "yyg0825@naver.com")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.data", is("test1")));
+		
+		//2. Id찾기 실패 케이스 ======================================
+		
+		resultActions =
+		mockMvc
+		.perform(get("/api/user/find/id")
+		.param("name", "양승준")
+		.param("email", "default@naver.com")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("fail")));
+		
+		
+	}	
 	
+	// 패스워드 찾기
+	@Test
+	public void testFFindPassword() throws Exception{
+
+		ResultActions resultActions;		
+		
+		//1. Password 찾기 성공 케이스==================================
+
+		resultActions =
+		mockMvc
+		.perform(get("/api/user/find/password")
+		.param("id", "test1")
+		.param("email", "yyg0825@naver.com")
+		.param("phone", "010-9136-4365")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
+		
+		//2. Password 찾기 실패 케이스 ======================================
+		
+		resultActions =
+		mockMvc
+		.perform(get("/api/user/find/password")
+		.param("id", "test12")
+		.param("email", "yyg0825@naver.com")
+		.param("phone", "010-9136-4365")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("fail")));
+		
+		
+	}	
+	// 로그아웃 test - Oauth
 	
+
 	// 카트담기
 	
 	// 카트삭제
