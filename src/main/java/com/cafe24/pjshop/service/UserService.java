@@ -31,9 +31,8 @@ public class UserService {
 	}
 
 	
-	public boolean modify(UserVo userVo) {
-		//
-		return true;
+	public int modify(UserVo userVo) {
+		return userDao.updateVo(userVo);
 	}
 
 	public boolean addcart(Long no) {

@@ -48,7 +48,6 @@ public class UserController {
 	public ResponseEntity<JSONResult> checkid(
 			@RequestParam(value="id", required=true) String id) {
 		
-		System.out.println(id.length());
 		Validator validator = 
 				Validation.buildDefaultValidatorFactory().getValidator();
 		
@@ -73,8 +72,8 @@ public class UserController {
 	
 	@ApiOperation(value="회원가입", notes ="회원가입 API")
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> join(@ModelAttribute @Valid UserVo userVo,BindingResult bindingResult) {
-		//@valid이외 정규식 필요한 UserVo
+	public ResponseEntity<JSONResult> join(@RequestBody @Valid UserVo userVo,BindingResult bindingResult) {
+
 		if( bindingResult.hasErrors()) {
 			List<ObjectError> list = bindingResult.getAllErrors();
 			for(ObjectError error : list) {
@@ -91,12 +90,9 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> login(
 			@RequestBody UserVo userVo){
-		//@valid이외 정규식 필요한 UserVo
-		
+
 		UserVo authUserVo;
 
-		
-		
 		if((authUserVo=userService.login(userVo)) != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(authUserVo));
 		}
@@ -104,35 +100,28 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("login실패!"));
 		}
 		
-
-		
-		
-	}
-	
-	@ApiOperation(value="회원 로그아웃", notes ="로그아웃 API")
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public JSONResult logout(HttpSession session){
-		
-		if(session.getAttribute("authUser") != null) {
-			session.removeAttribute("authUser");
-			return JSONResult.success("logout success");
-		}		
-		else {
-			return JSONResult.fail("logoutFail");
-		}
-		
 	}
 	
 	@ApiOperation(value="회원정보수정", notes ="회원정보수정 API")
-	@RequestMapping(value = "/modify", method = RequestMethod.PUT)
-	public JSONResult modify(@ModelAttribute @Valid UserVo userVo) {
+	@RequestMapping(value = "/{no}", method = RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modify(
+			@PathVariable("no") Long no,
+			@RequestBody @Valid UserVo userVo,
+			BindingResult bindingResult){
 		
-		boolean result = userService.modify(userVo);
-		if(result) {
-			return JSONResult.success("modify success");
+		//password,email,address,phoneNumber 변경가능
+		if( bindingResult.hasErrors()) {
+			List<ObjectError> list = bindingResult.getAllErrors();
+			for(ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		
+		if(userService.modify(userVo)==1) {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("성공적으로 수정하였습니다."));
 		}
 		else {
-			return JSONResult.fail("modify fail");
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("수정에 실패하였습니다."));
 		}
 		
 	}

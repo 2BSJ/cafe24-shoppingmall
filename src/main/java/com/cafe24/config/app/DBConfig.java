@@ -8,7 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -29,8 +33,19 @@ public class DBConfig {
 		basicDataSource.setPassword(env.getProperty("jdbc.password"));
 		basicDataSource.setInitialSize(env.getProperty("jdbc.initialSize", Integer.class));
 		basicDataSource.setMaxActive(env.getProperty("jdbc.maxActive", Integer.class));
+		
+		DatabasePopulatorUtils.execute(createDatabasePopulator(), basicDataSource);
+
 		return basicDataSource;
 	}
+	
+	private DatabasePopulator createDatabasePopulator() {
+	      ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+	        databasePopulator.setContinueOnError(true);
+	        databasePopulator.addScripts(new ClassPathResource("com/cafe24/config/app/properties/schema.sql"),new ClassPathResource("com/cafe24/config/app/properties/data.sql"));
+	        return databasePopulator;
+	   }
+
 	
 	@Bean
 	public PlatformTransactionManager transactionManager(DataSource datasource) {

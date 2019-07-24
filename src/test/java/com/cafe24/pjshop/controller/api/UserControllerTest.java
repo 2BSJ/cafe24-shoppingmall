@@ -2,14 +2,12 @@ package com.cafe24.pjshop.controller.api;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.hamcrest.collection.IsEmptyCollection;
-import org.hamcrest.core.IsNull;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -23,14 +21,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.AppConfig;
 import com.cafe24.pjshop.config.TestWebConfig;
-import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.vo.UserVo;
 import com.google.gson.Gson;
 
@@ -57,29 +53,13 @@ public class UserControllerTest {
 		
 		//테스트 데이터베이스의 테이블들 초기화시켜주고 값 세팅시키기.
 	}
-	
-	public void insertData() throws Exception{
-		
-		mockMvc
-		.perform(post("/api/user/join")
-		.param("name", "양승준")
-		.param("id","test1")
-		.param("password", "test123!!")
-		.param("phoneNumber", "010-1111-2222")
-		.param("age", "28")
-		.param("address", "경기도 남양주시 호평동")
-		.param("email","yyg0825@naver.com")
-		.param("gender", "male")
-		.param("role", "ROLE_USER")
-		.contentType(MediaType.APPLICATION_JSON));
-	}
 
 	//중복확인 테스트
 	@Test
 	public void testACheckid() throws Exception{
 		
 		//DB 데이터 삽입
-		insertData();
+		//insertData();
 		ResultActions resultActions;
 		//=====================아이디가 중복체크 된 case==================
 		
@@ -133,80 +113,92 @@ public class UserControllerTest {
 	@Test
 	public void testBJoin() throws Exception{
 		
-		insertData();
+	//	insertData();
 		ResultActions resultActions;
 		
 		//1. 기본 join 가능 Data
+		UserVo userVo1 = new UserVo();		
+		userVo1.setId("test2");
+		userVo1.setPassword("test123!!!");
+		userVo1.setName("신현준");
+		userVo1.setPhoneNumber("010-3330-8969");
+		userVo1.setAge(28);
+		userVo1.setAddress("경기도 남양주시 호평동");
+		userVo1.setEmail("burgom92@naver.com");
+		userVo1.setGender("male");
+		userVo1.setRole("ROLE_USER");
+		
 		resultActions =
 		mockMvc
 		.perform(post("/api/user/join")
-		.param("name", "신현준")
-		.param("id","test2")
-		.param("password", "test123!!!")
-		.param("phoneNumber", "010-3330-8969")
-		.param("age", "28")
-		.param("address", "경기도 남양주시 호평동")
-		.param("email","burgom92@naver.com")
-		.param("gender", "male")
-		.param("role", "ROLE_USER")		
-		.contentType(MediaType.APPLICATION_JSON));
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo1)));
 	
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk());
 		
 		//2. id valid 걸리는 data
+		UserVo userVo2 = new UserVo();		
+		userVo2.setId("3test2");
+		userVo2.setPassword("test123!!!");
+		userVo2.setName("신현준");
+		userVo2.setPhoneNumber("010-3330-8969");
+		userVo2.setAge(28);
+		userVo2.setAddress("경기도 남양주시 호평동");
+		userVo2.setEmail("burgom92@naver.com");
+		userVo2.setGender("male");
+		userVo2.setRole("ROLE_USER");
+		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")
-		.param("name", "신현준")
-		.param("id","3test2")
-		.param("password", "test123!!!")
-		.param("phoneNumber", "010-3330-8969")
-		.param("age", "28")
-		.param("address", "경기도 남양주시 호평동")
-		.param("email","burgom92@naver.com")
-		.param("gender", "male")
-		.param("role", "ROLE_USER")		
-		.contentType(MediaType.APPLICATION_JSON));
+		.perform(post("/api/user/join")	
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo2)));
 	
 		resultActions
 		.andDo(print())
 		.andExpect(status().isBadRequest());	
 		
 		//3. password valid 걸리는 data
+		UserVo userVo3 = new UserVo();		
+		userVo3.setId("test2");
+		userVo3.setPassword("test123");
+		userVo3.setName("신현준");
+		userVo3.setPhoneNumber("010-3330-8969");
+		userVo3.setAge(28);
+		userVo3.setAddress("경기도 남양주시 호평동");
+		userVo3.setEmail("burgom92@naver.com");
+		userVo3.setGender("male");
+		userVo3.setRole("ROLE_USER");
+		
 		resultActions =
 		mockMvc
 		.perform(post("/api/user/join")
-		.param("name", "신현준")
-		.param("id","test2")
-		.param("password", "test123")
-		.param("phoneNumber", "010-3330-8969")
-		.param("age", "28")
-		.param("address", "경기도 남양주시 호평동")
-		.param("email","burgom92@naver.com")
-		.param("gender", "male")
-		.param("role", "ROLE_USER")		
-		.contentType(MediaType.APPLICATION_JSON));
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo3)));
 	
 		resultActions
 		.andDo(print())
 		.andExpect(status().isBadRequest());
 		
 		//4. email valid 걸리는 data
+		UserVo userVo4 = new UserVo();		
+		userVo4.setId("test2");
+		userVo4.setPassword("test123!!");
+		userVo4.setName("신현준");
+		userVo4.setPhoneNumber("010-3330-8969");
+		userVo4.setAge(28);
+		userVo4.setAddress("경기도 남양주시 호평동");
+		userVo4.setEmail("1burgom92@naver.com");
+		userVo4.setGender("male");
+		userVo4.setRole("ROLE_USER");
+		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")
-		.param("name", "신현준")
-		.param("id","test2")
-		.param("password", "test123!!")
-		.param("phoneNumber", "010-3330-8969")
-		.param("age", "28")
-		.param("address", "경기도 남양주시 호평동")
-		.param("email","1burgom92@naver.com")
-		.param("gender", "male")
-		.param("role", "ROLE_USER")		
-		.contentType(MediaType.APPLICATION_JSON));
+		.perform(post("/api/user/join")	
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo4)));
 	
 		resultActions
 		.andDo(print())
@@ -216,7 +208,7 @@ public class UserControllerTest {
 	// 로그인 test
 	@Test
 	public void testCLogin() throws Exception{
-		insertData();
+	//	insertData();
 		ResultActions resultActions;
 		UserVo userVo = new UserVo();		
 		
@@ -252,9 +244,37 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.result", is("fail")));
 		
 	}
-	// 로그아웃 test
 	
 	// 회원정보수정
+	@Test
+	public void testDUpdate() throws Exception{
+	//	insertData();
+		ResultActions resultActions;
+		UserVo userVo = new UserVo();		
+		
+		//1. 업데이트 성공 케이스==================================
+		userVo.setNo(1L);
+		userVo.setName("양승준수정");
+		userVo.setEmail("yyg0825@naver.com");
+		userVo.setGender("남");
+		userVo.setId("yyg0825");
+		userVo.setPhoneNumber("010-9136-4365");
+		userVo.setPassword("test123!!!!");
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/user/1")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk());
+		
+	}	
+	// 로그아웃 test-
+	
+	
 	
 	// 카트담기
 	

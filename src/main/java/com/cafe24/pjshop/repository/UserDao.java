@@ -14,19 +14,20 @@ public class UserDao {
 	
 	
 	public int countById(String id) {
-		
 		return sqlSession.selectOne("user.countById",id);
 	}
 	
 	public int insertVo(UserVo userVo) {
-		
 		return sqlSession.insert("user.insertVo",userVo);
 		
 	}
 
 	public UserVo getByIdAndPassword(UserVo userVo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("user.getByIdAndPassword",userVo);
+	}
+
+	public int updateVo(UserVo userVo) {
+		return sqlSession.update("user.updateVo",userVo);
 	}
 
 

@@ -39,9 +39,41 @@
 		gender,point,ordercount,role
 		from user
 		where id = #{id}
-		and password=SHA2('${password}', 512);
+		and password=SHA2(#{password}, 512);
 		]]>
 	</select>
+	
+	<update id="updateVo" parameterType="uservo">
+		<![CDATA[
+		update user
+		]]>
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="password != null">
+			<![CDATA[
+			password=SHA2(#{password}, 512),
+			]]>
+		</if>
+		<if test="email != null">
+			<![CDATA[
+			email=AES_ENCRYPT(#{email},SHA2(#{key},512)),
+			]]>
+		</if>
+		<if test="address != null">
+			<![CDATA[
+			address=AES_ENCRYPT(#{address},SHA2(#{key},512)),
+			]]>
+		</if>
+		<if test="phoneNumber != null">
+			<![CDATA[
+			phone_number=#{phoneNumber},
+			]]>
+		</if>		   
+		<![CDATA[
+		 where no = #{no}      	 
+		]]>
+		</trim>
+	</update>
+	
 	
 	<select id="getByNo" resultType="uservo" parameterType='long'>
 		<![CDATA[	 
@@ -61,20 +93,5 @@
 
 
 
-	<update id="update" parameterType="uservo">
-		<![CDATA[
-		update user
-		   set name = #{name },
-		]]>
-		<if test="password != ''">
-			<![CDATA[
-			password=#{password }
-			]]>
-		</if>		   
-		<![CDATA[
-		       gender = #{gender }
-		       
-		 where no = #{no }      	 
-		]]>
-	</update>
+	
 </mapper>
