@@ -34,17 +34,10 @@ public class DBConfig {
 		basicDataSource.setInitialSize(env.getProperty("jdbc.initialSize", Integer.class));
 		basicDataSource.setMaxActive(env.getProperty("jdbc.maxActive", Integer.class));
 		
-		DatabasePopulatorUtils.execute(createDatabasePopulator(), basicDataSource);
 
 		return basicDataSource;
 	}
 	
-	private DatabasePopulator createDatabasePopulator() {
-	      ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-	        databasePopulator.setContinueOnError(true);
-	        databasePopulator.addScripts(new ClassPathResource("com/cafe24/config/app/properties/schema.sql"),new ClassPathResource("com/cafe24/config/app/properties/data.sql"));
-	        return databasePopulator;
-	   }
 
 	
 	@Bean
