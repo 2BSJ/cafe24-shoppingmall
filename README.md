@@ -124,7 +124,6 @@
   "message":"에러 메세지"
 }
 ```
----
 #### Method
 * POST : 생성(Create)
 * GET : 조회(Read)
@@ -147,7 +146,7 @@ PUT /api/user -- 회원정보수정
 ###### 요청사양
 |Parameter|Description|
 |:---:|:---:|
-|`required` id|중복체크할 아이디|
+|<span style="color:red">required</span> id|중복체크할 아이디|
 ###### URL
 ```
 GET http://cafe24-shoppingmall.com/api/user/{id}
