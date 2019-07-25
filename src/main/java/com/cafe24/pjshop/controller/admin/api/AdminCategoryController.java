@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/api/admin/category")
 @RestController("AdminCategoryAPIController")
-@Api(value = "AdminController", description ="관리자 컨트롤러")
+@Api(value = "AdminCategoryController", description ="관리자 카테고리 관리 컨트롤러")
 public class AdminCategoryController {
 
 	
