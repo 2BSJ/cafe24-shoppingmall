@@ -146,7 +146,7 @@ PUT /api/user -- 회원정보수정
 ###### 요청사양
 |Parameter|Description|
 |:---:|:---:|
-|<span style="color:red">required</span> id|중복체크할 아이디|
+|`required` id|중복체크할 아이디|
 ###### URL
 ```
 GET http://cafe24-shoppingmall.com/api/user/{id}
