@@ -1,3 +1,4 @@
+# [cafe24-shoppingmall 작업계획서 바로가기](https://github.com/2BSJ/cafe24-shoppingmall/wiki)
 # cafe24-shoppingmall 프로젝트 구성도
 
 ## src/main/java 구성
