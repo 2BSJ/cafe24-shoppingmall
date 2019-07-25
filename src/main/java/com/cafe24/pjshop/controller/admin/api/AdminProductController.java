@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/api/admin/product")
 @RestController("AdminProductAPIController")
-@Api(value = "AdminController", description ="관리자 컨트롤러")
+@Api(value = "AdminProductController", description ="관리자 상품관리 컨트롤러")
 public class AdminProductController {
 
 	

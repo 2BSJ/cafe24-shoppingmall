@@ -18,16 +18,16 @@
   * SecurityConfig - Interceptor 경로 및 환경설정
   * SwaggerConfig - Swagger base package 및 path 설정, swagger-ui.html 파일설정
 
-#### pjshop.controller
-  * MainController - 메인컨트롤러
-  * AdminController
-  * OrderController  
-  * ProductController  
-  * UserController
+#### pjsho.controller.admin.api
+  * AdminCategoryController - 카테고리 관리
+  * AdminOrderController - 주문정보관리
+  * AdminProductController - 상품 관리
+  * AdminUserController - 회원정보관리,회원삭제 등
+  * AdminCouponController - 쿠폰 관리 url 처리
+  * AdminOptionController - 옵션 관리 url 처리
 
 #### pjshop.controller.api
 ###### url 및 json형식 데이터 확인 api
-  * AdminController - 카테고리 관리, 상품 관리, 옵션 관리, 주문정보 관리, 회원정보 관리, 쿠폰 관리 url 처리  
   * OrderController - 상품주문, 주문내역, 결제 url 처리  
   * ProductController - 상품목록조회, 상품상세보기, 상품검색하기 url 처리  
   * UserController - 회원가입, 로그인, 로그아웃, 장바구니 관리, 마이페이지 관리 url 처리  
