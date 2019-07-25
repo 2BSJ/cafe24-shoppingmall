@@ -9,10 +9,10 @@ import com.cafe24.pjshop.dto.JSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RequestMapping("/api/admin")
-@RestController("AdminAPIController")
+@RequestMapping("/api/admin/category")
+@RestController("AdminCategoryAPIController")
 @Api(value = "AdminController", description ="관리자 컨트롤러")
-public class AdminController {
+public class AdminCategoryController {
 
 	
 	@ApiOperation(value="메인", notes ="상품 전체목록 조회API")

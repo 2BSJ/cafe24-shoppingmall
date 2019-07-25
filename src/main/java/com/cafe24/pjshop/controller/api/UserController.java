@@ -43,10 +43,10 @@ public class UserController {
 	private UserService userService;
 	
 	
-	@ApiOperation(value="아이디 존재 여부", notes ="아이디체크 API, checkid=success")
-	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
+	@ApiOperation(value="아이디 중복체크", notes ="아이디 중복 체크 API")
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkid(
-			@RequestParam(value="id", required=true) String id) {
+			@PathVariable(value="id") String id) {
 		
 		Validator validator = 
 				Validation.buildDefaultValidatorFactory().getValidator();
@@ -62,16 +62,16 @@ public class UserController {
 		int countId = userService.checkId(id);
 		
 		if(countId == 1) {	
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("아이디가 존재합니다."));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("아이디가 존재합니다."));
 		}
 		else {
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("아이디 사용가능"));	
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));	
 		}
 			
 	}
 	
 	@ApiOperation(value="회원가입", notes ="회원가입 API")
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> join(@RequestBody @Valid UserVo userVo,BindingResult bindingResult) {
 
 		if( bindingResult.hasErrors()) {
@@ -81,13 +81,15 @@ public class UserController {
 			}
 		}
 		int result = userService.join(userVo);
-		//return JSONResult.success(result+", redirect /api/user/joinsuccess");
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("성공"));
+		if((result = userService.join(userVo)) == 1)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		else
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("회원가입 실패"));
 
 	}
 	
 	@ApiOperation(value="회원 로그인", notes ="로그인 API")
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> login(
 			@RequestBody UserVo userVo){
 
@@ -103,7 +105,7 @@ public class UserController {
 	}
 	
 	@ApiOperation(value="회원정보수정", notes ="회원정보수정 API")
-	@RequestMapping(value = "/modify", method = RequestMethod.PUT)
+	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modify(
 			@RequestBody @Valid UserVo userVo,
 			BindingResult bindingResult){
@@ -117,7 +119,7 @@ public class UserController {
 		}
 		
 		if(userService.modify(userVo)==1) {
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("성공적으로 수정하였습니다."));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("수정에 실패하였습니다."));
@@ -157,7 +159,7 @@ public class UserController {
 		userVo.setPhoneNumber(phone);
 		
 		if(userService.findPassword(userVo) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("password를 email로 발송 완료"));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("비밀번호를 찾지 못하였습니다."));

@@ -26,14 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.TestAppConfig;
-import com.cafe24.pjshop.config.WebConfig;
+import com.cafe24.pjshop.config.TestWebConfig;
 import com.cafe24.pjshop.vo.UserVo;
 import com.google.gson.Gson;
 
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestAppConfig.class,WebConfig.class})
+@ContextConfiguration(classes = {TestAppConfig.class,TestWebConfig.class})
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Rollback(value = true)
@@ -63,20 +63,18 @@ public class UserControllerTest {
 		
 		resultActions = 
 		mockMvc
-		.perform(get("/api/user/checkid")
-		.param("id", "test1") //test1 == 생성되어있는 아이디
+		.perform(get("/api/user/test1")
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")));
+		.andExpect(jsonPath("$.result", is("fail")));
 		
 		//=====================중복은 아니지만 valid에 걸린 case==================
 		
 		resultActions = 
-		mockMvc.perform(get("/api/user/checkid")
-		.param("id", "1test2")
+		mockMvc.perform(get("/api/user/1test2")
 		.contentType(MediaType.APPLICATION_JSON));
 				
 		resultActions
@@ -86,8 +84,7 @@ public class UserControllerTest {
 		
 		
 		resultActions = 
-		mockMvc.perform(get("/api/user/checkid")
-		.param("id", "te2")
+		mockMvc.perform(get("/api/user/te2")
 		.contentType(MediaType.APPLICATION_JSON));
 				
 		resultActions
@@ -98,13 +95,12 @@ public class UserControllerTest {
 		//=====================사용가능 case==================
 		
 		resultActions = 
-		mockMvc.perform(get("/api/user/checkid")
-		.param("id", "test2")
+		mockMvc.perform(get("/api/user/test2")
 		.contentType(MediaType.APPLICATION_JSON));
 				
 		resultActions
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("fail")))
+		.andExpect(jsonPath("$.result", is("success")))
 		.andDo(print());
 	}
 	
@@ -126,7 +122,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")
+		.perform(post("/api/user")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo1)));
 	
@@ -148,7 +144,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")	
+		.perform(post("/api/user")	
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo2)));
 	
@@ -170,7 +166,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")
+		.perform(post("/api/user")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo3)));
 	
@@ -192,7 +188,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(post("/api/user/join")	
+		.perform(post("/api/user")	
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo4)));
 	
@@ -213,7 +209,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(get("/api/user/login")
+		.perform(post("/api/user/login")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
@@ -229,7 +225,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(get("/api/user/login")
+		.perform(post("/api/user/login")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
@@ -261,7 +257,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(put("/api/user/modify")
+		.perform(put("/api/user")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
@@ -275,7 +271,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(put("/api/user/modify")
+		.perform(put("/api/user")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
@@ -288,7 +284,7 @@ public class UserControllerTest {
 		
 		resultActions =
 		mockMvc
-		.perform(put("/api/user/modify")
+		.perform(put("/api/user")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(userVo)));
 		
