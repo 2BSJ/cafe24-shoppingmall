@@ -80,11 +80,92 @@
   * ReviewVo
   * UserVo
 
-## src/test/java 구성중...
+## src/test/java 구성
+
+#### com.cafe24.config.app
+  * TestDBConfig - TestDatabase initialize용 메서드(shhema.sql,data.sql) 추가 및 TestDatabase 연결
+#### com.cafe24.pjshop.config
+  * TestAppConfig - TestDBConfig,Mybatis 설정
+  * TestWebConfig - test용 webconfig만 설정
+#### com.cafe24.pjshop.controller.api
+  * AdminControllerTest
+  * OrderControleerTest
+  * ProductControllerTest
+  * UserControllerTest
+
+## src/test/resources
+
+#### com.cafe24.config.app.properties
+  * data.sql - 초기 테스트용 데이터 insert 설정
+  * schema.sql - 초기 테스트용 테이블 schema 설정
+  * jdbc.properties - testDatabase 연결 설정
 
 ## Swagger API - localhost:8080/cafe24-shoppingmall/swagger-ui.html
 <img src='./Readme image/api목록.PNG'>  
 
+---
+#### Request/Response Format
+
+* API 요청 응답 : JSON Format
+* 정상 응답 예제
+```java
+{
+  "result":"success"
+  "data":{
+      "key":"value",
+      "key":"value"
+  }
+}
+```
+* 에러 응답 예제
+```java
+{
+  "result":"fail"
+  "message":"에러 메세지"
+}
+```
+---
+#### Method
+* POST : 생성(Create)
+* GET : 조회(Read)
+* PUT : 수정(Update)
+* DELETE : 삭제(Delete)
+---
+#### UserController
+```
+GET /api/user/{id} -- 아이디 중복체크
+GET /api/user/find/id -- 회원아이디찾기
+GET /api/user/find/password -- 비밀번호찾기
+
+POST /api/user -- 회원가입
+POST /api/user/login -- 로그인
+
+PUT /api/user -- 회원정보수정
+```
+
+##### CheckId(중복체크)
+###### 요청사양
+|Parameter|Description|
+|:---:|:---:|
+|`required` id|중복체크할 아이디|
+###### URL
+```
+GET http://cafe24-shoppingmall.com/api/user/{id}
+```
+###### Response Example
+```java
+Status = 200
+Error message = null
+Headers = {Content-Type=[application/json;charset=UTF-8]}
+Content type = application/json;charset=UTF-8
+  Body = {
+"result" : "success",
+"message" : null,
+"data" : true
+}
+```
+
+---
 #### UserController  
 <img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>  
 
@@ -119,7 +200,7 @@
 `/api/user/modify`  
 `param` = `UserVo`
 ---
- 
+
 
 * 장바구니담기  
 `post`  
