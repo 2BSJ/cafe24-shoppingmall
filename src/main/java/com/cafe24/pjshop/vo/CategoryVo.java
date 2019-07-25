@@ -1,16 +1,29 @@
 package com.cafe24.pjshop.vo;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class CategoryVo {
 
-	private int no;
-	private String name;
-	private int depth;
-	private int group;
+	private Long no;
 	
-	public int getNo() {
+	@NotEmpty
+	@Length(min=1)
+	private String name;
+	
+	private int depth;
+	private int groupNo;
+	
+	public CategoryVo(String name) {
+		this.name = name;
+	}
+	public CategoryVo() {
+		
+	}
+	public Long getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(Long no) {
 		this.no = no;
 	}
 	public String getName() {
@@ -25,10 +38,10 @@ public class CategoryVo {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	public int getGroup() {
-		return group;
+	public int getGroupNo() {
+		return groupNo;
 	}
-	public void setGroup(int group) {
-		this.group = group;
+	public void setGroup(int groupNo) {
+		this.groupNo = groupNo;
 	}
 }

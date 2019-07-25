@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+			
+	<select id="getVoByGroupNo" parameterType='java.lang.Integer' resultType="categoryvo">
+		<![CDATA[	 
+		SELECT *
+		FROM category
+		 ]]> 
+		<if test="_parameter != 0">
+			<![CDATA[
+			WHERE group_no = #{groupNo}	
+			]]>
+		</if>
+		
+		<if test="_parameter == 0">
+			<![CDATA[
+			WHERE depth = 1	
+			]]>
+		</if>
+	</select>		
+			
+	<select id="countByName" parameterType='string' resultType="int">
+		<![CDATA[	 
+		SELECT count(*)
+		  FROM category
+		 WHERE name = #{name}
+		]]>
+	</select>
+	
+	<insert id="insertTopCategory" parameterType='categoryvo'>
+		<![CDATA[	 
+		INSERT
+		INTO category
+		VALUES(null,
+			 #{name},
+			  	1,
+			   (select ifnull(MAX(tmp.group_no)+1, 1) from category tmp))
+		]]>
+	</insert>
+	
+	<insert id="insertLowCategory" parameterType='categoryvo'>
+		<![CDATA[	 
+		INSERT
+		INTO category
+		VALUES(null,
+			 #{name},
+			  	#{depth},
+			   #{groupNo}
+		]]>
+	</insert>
+
+</mapper>

@@ -36,8 +36,8 @@ import com.google.gson.Gson;
 @ContextConfiguration(classes = {TestAppConfig.class,TestWebConfig.class})
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Rollback(value = true)
-@Transactional
+//@Rollback(value = true)
+//@Transactional
 public class UserControllerTest {
 
 	private MockMvc mockMvc;
@@ -294,14 +294,13 @@ public class UserControllerTest {
 	public void testEFindId() throws Exception{
 
 		ResultActions resultActions;		
-		
+		String name = "양승준";
+		String email = "yyg0825@naver.com";
 		//1. Id찾기 성공 케이스==================================
 
 		resultActions =
 		mockMvc
-		.perform(get("/api/user/find/id")
-		.param("name", "양승준")
-		.param("email", "yyg0825@naver.com")
+		.perform(get("/api/user/find/id?name={name}&email={email}",name,email)
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
@@ -310,12 +309,12 @@ public class UserControllerTest {
 		.andExpect(jsonPath("$.data", is("test1")));
 		
 		//2. Id찾기 실패 케이스 ======================================
+		name="양승준";
+		email="default@naver.com";
 		
 		resultActions =
-		mockMvc
-		.perform(get("/api/user/find/id")
-		.param("name", "양승준")
-		.param("email", "default@naver.com")
+		mockMvc//? parameter 시범케이스
+		.perform(get("/api/user/find/id?name={name}&email={email}",name,email)
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions

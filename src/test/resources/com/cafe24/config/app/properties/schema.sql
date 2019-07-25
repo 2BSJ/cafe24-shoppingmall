@@ -260,10 +260,10 @@ ALTER TABLE `review`
 
 -- 카테고리
 CREATE TABLE `category` (
-	`no`    INT UNSIGNED NOT NULL COMMENT '카테고리번호', -- 카테고리번호
-	`name`  VARCHAR(20)  NOT NULL COMMENT '카테고리이름', -- 카테고리이름
-	`depth` INT UNSIGNED NOT NULL COMMENT '깊이', -- 깊이
-	`group` INT UNSIGNED NOT NULL COMMENT '그룹' -- 그룹
+	`no`       INT UNSIGNED NOT NULL COMMENT '카테고리번호', -- 카테고리번호
+	`name`     VARCHAR(20)  NOT NULL COMMENT '카테고리이름', -- 카테고리이름
+	`depth`    INT UNSIGNED NOT NULL COMMENT '깊이', -- 깊이
+	`group_no` INT UNSIGNED NOT NULL COMMENT '그룹' -- 그룹
 )
 COMMENT '카테고리';
 
