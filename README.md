@@ -100,55 +100,10 @@
   * data.sql - 초기 테스트용 데이터 insert 설정
   * schema.sql - 초기 테스트용 테이블 schema 설정
   * jdbc.properties - testDatabase 연결 설정
+---
 
 ## Swagger API - localhost:8080/cafe24-shoppingmall/swagger-ui.html
 <img src='./Readme image/api목록.PNG'>  
 
 ---
-#### UserController  
-<img src='./Readme image/회원가입 시퀀스다이어그램.PNG'>  
 
-* ID중복체크요청  
-`get`  
-`/api/user/checkid`  
-`param` = `String id`  
-* 회원가입  
-`post`  
-`/api/user/join`  
-`param` = `UserVo`  
----
-<img src='./Readme image/회원로그인 시퀀스다이어그램.PNG'>  
-
-* 회원 로그인  
-`post`  
-`/api/user/login`  
-`param` = `String id`
-`param` = `String password`
----
-<img src='./Readme image/회원로그아웃 시퀀스다이어그램.PNG'>  
-
-* 회원 로그아웃  
-`post`  
-`/api/user/logout`  
-`param` = `없음`
----
-<img src='./Readme image/회원정보수정 시퀀스다이어그램.PNG'>  
-
-* 회원정보수정  
-`put`  
-`/api/user/modify`  
-`param` = `UserVo`
----
-
-
-* 장바구니담기  
-`post`  
-`/api/user/cart`  
-`param` = `Long no`
----
-
-
-* 장바구니삭제  
-`delete`  
-`/api/user/cart`  
-`param` = `Long no`
