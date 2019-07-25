@@ -118,7 +118,6 @@ public class UserControllerTest {
 		userVo1.setAddress("경기도 남양주시 호평동");
 		userVo1.setEmail("burgom92@naver.com");
 		userVo1.setGender("male");
-		userVo1.setRole("ROLE_USER");
 		
 		resultActions =
 		mockMvc
@@ -140,7 +139,6 @@ public class UserControllerTest {
 		userVo2.setAddress("경기도 남양주시 호평동");
 		userVo2.setEmail("burgom92@naver.com");
 		userVo2.setGender("male");
-		userVo2.setRole("ROLE_USER");
 		
 		resultActions =
 		mockMvc
@@ -162,7 +160,6 @@ public class UserControllerTest {
 		userVo3.setAddress("경기도 남양주시 호평동");
 		userVo3.setEmail("burgom92@naver.com");
 		userVo3.setGender("male");
-		userVo3.setRole("ROLE_USER");
 		
 		resultActions =
 		mockMvc
@@ -184,7 +181,6 @@ public class UserControllerTest {
 		userVo4.setAddress("경기도 남양주시 호평동");
 		userVo4.setEmail("1burgom92@naver.com");
 		userVo4.setGender("male");
-		userVo4.setRole("ROLE_USER");
 		
 		resultActions =
 		mockMvc

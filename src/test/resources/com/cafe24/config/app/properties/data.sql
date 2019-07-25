@@ -1,6 +1,6 @@
 /* User Test Data */
 INSERT 
-	INTO user 
+	INTO user(no,name,id,password,reg_date,phone_number,age,address,email,gender,point,ordercount)
 		VALUES( null, 
 				'양승준',
 		   		'test1', 
@@ -12,5 +12,4 @@ INSERT
 		   		AES_ENCRYPT('yyg0825@naver.com',SHA2('cafe',512)), 
 		   		'male',
 		   		0,
-		   		0,
-		   		'ROLE_USER');
+		   		0);

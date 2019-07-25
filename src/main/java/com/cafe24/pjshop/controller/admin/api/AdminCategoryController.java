@@ -15,8 +15,8 @@ import io.swagger.annotations.ApiOperation;
 public class AdminCategoryController {
 
 	
-	@ApiOperation(value="메인", notes ="상품 전체목록 조회API")
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@ApiOperation(value="/", notes ="상품 전체목록 조회API")
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public JSONResult list() {
 		
 		return null;
