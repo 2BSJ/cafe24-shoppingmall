@@ -55,11 +55,12 @@
 		</choose>
 	</insert>
 	
-	<delete id="deleteCategory" parameterType='long'>
-		<![CDATA[
-			DELETE
-			FROM category
-			WHERE no = #{parameter_no}
+	<delete id="deleteCategory" parameterType='categoryvo'>
+
+		<![CDATA[	
+		DELETE
+		FROM category
+		WHERE depth > #{depth} and group_no = #{groupNo} or no = #{no}
 		]]>
 	</delete>
 	

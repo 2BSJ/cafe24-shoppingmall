@@ -37,9 +37,9 @@ public class AdminCategoryService {
 		}
 	}
 
-	public int deleteCategory(Long no) {
+	public int deleteCategory(CategoryVo categoryVo) {
 		// TODO Auto-generated method stub
-		return categoryDao.deleteCategory(no);
+		return categoryDao.deleteCategory(categoryVo);
 	}
 
 }

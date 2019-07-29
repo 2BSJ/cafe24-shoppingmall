@@ -174,10 +174,12 @@ public class AdminCategoryControllerTest {
 		ResultActions resultActions;	
 		CategoryVo categoryVo1 = new CategoryVo();	
 		//1. delete 성공 case ==================================
+		//1.1 최상위카테고리인 옷 삭제했을때
 		categoryVo1.setNo(1L);
 		categoryVo1.setName("옷");
 		categoryVo1.setDepth(1);
 		categoryVo1.setGroupNo(1);
+		
 		resultActions =
 		mockMvc
 		.perform(delete("/api/admin/category")
@@ -189,6 +191,62 @@ public class AdminCategoryControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)));
+		
+
+		//1.2 최상위 카테고리인 신발 삭제했을때 -- 하위 카테고리인 샌달도 같이 삭제============
+		CategoryVo categoryVo2 = new CategoryVo();	
+		categoryVo2.setNo(2L);
+		categoryVo2.setName("신발");
+		categoryVo2.setDepth(1);
+		categoryVo2.setGroupNo(2);
+		
+		resultActions =
+		mockMvc
+		.perform(delete("/api/admin/category")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(categoryVo2)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(true)));
+		
+		//2. 실패 case
+		//2.1 categoryVo가 이상한 값이 넘어갔을때
+		
+		CategoryVo categoryVo3 = new CategoryVo();	
+		categoryVo3.setNo(0L);
+		categoryVo3.setName("");
+		categoryVo3.setDepth(0);
+		categoryVo3.setGroupNo(0);
+		
+		resultActions =
+		mockMvc
+		.perform(delete("/api/admin/category")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(categoryVo3)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.result", is("fail")));		
+	}	
+	
+	//카테고리가 없을때 getList
+	@Test
+	public void testFGetListAfterAllCategoryDelete() throws Exception{
+		ResultActions resultActions;		
+		//1. 상위카테고리 추가하고 나서 get ==================================
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/category/list")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("fail")));
 		
 
 	}	

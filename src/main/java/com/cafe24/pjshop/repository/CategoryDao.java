@@ -29,9 +29,9 @@ public class CategoryDao {
 		return sqlSession.selectList("category.getVoByGroupNo",groupNo);
 	}
 
-	public int deleteCategory(Long no) {
+	public int deleteCategory(CategoryVo categoryVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("category.deleteCategory",no);
+		return sqlSession.delete("category.deleteCategory",categoryVo);
 	}
 	
 
