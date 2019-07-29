@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	</settings>
+	
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.cafe24.pjshop.vo.UserVo"/>
 		<typeAlias alias="categoryvo" type="com.cafe24.pjshop.vo.CategoryVo"/>
-    	</typeAliases>	
+		<typeAlias alias="productvo" type="com.cafe24.pjshop.vo.ProductVo"/>
+    </typeAliases>
+	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/category.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/product.xml" />
 	</mappers>
+	
 </configuration>

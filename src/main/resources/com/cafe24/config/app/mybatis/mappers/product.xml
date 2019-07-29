@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+
+	<insert id="insertProduct" parameterType='categoryvo'>
+	INSERT
+	INTO product
+	VALUES(null,
+		   #{name},
+		   #{simple_description},
+		   #{description},
+		   #{manufacture},
+		   0,
+		   #{price},
+		   #{deliverycost},
+		   #{display_status},
+		   )
+		<choose>
+		
+		<when test='depth != 0'>
+			<![CDATA[	
+			INSERT
+			INTO category
+			VALUES(null,
+				 #{name},
+				  	#{depth},
+				   #{groupNo})
+			]]>
+		</when>
+		
+		<otherwise>
+			<![CDATA[	 
+			INSERT
+			INTO category
+			VALUES(null,
+				 #{name},
+				  	1,
+				   (select ifnull(MAX(tmp.group_no)+1, 1) from category tmp))
+			]]>
+			<!--  null일 경우 groupNo를 1로 셋팅해주고 아닐경우 맥스값에서 +1 -->
+		</otherwise>
+		</choose>
+	</insert>	
+
+	
+</mapper>

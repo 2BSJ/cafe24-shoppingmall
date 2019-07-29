@@ -22,3 +22,4 @@ INSERT
 		VALUES(null, '상의', 1, (select 
 								ifnull(MAX(tmp.group_no)+1, 1) 
 								from category tmp));
+								

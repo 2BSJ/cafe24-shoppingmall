@@ -137,6 +137,7 @@ public class UserController {
 		userVo.setName(name);
 		userVo.setEmail(email);
 		String findId;
+		
 		if((findId = userService.findId(userVo)) != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(findId));
 		}

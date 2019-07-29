@@ -153,7 +153,7 @@ ALTER TABLE `product`
 -- 상품옵션
 CREATE TABLE `option` (
 	`no`             INT UNSIGNED NOT NULL COMMENT '옵션번호', -- 옵션번호
-	`value`          VARCHAR(100) NOT NULL COMMENT '옵션값(S,M,빨강 등)', -- 옵션값(S,M,빨강 등)
+	`value`          VARCHAR(100) NOT NULL COMMENT '완성된옵션값(빨강/M,검흰/260)', -- 완성된옵션값(빨강/M,검흰/260)
 	`price`          INT UNSIGNED NOT NULL COMMENT '옵션추가가격', -- 옵션추가가격
 	`stock`          INT UNSIGNED NOT NULL COMMENT '재고', -- 재고
 	`product_no`     INT UNSIGNED NOT NULL COMMENT '상품번호', -- 상품번호
@@ -173,10 +173,11 @@ ALTER TABLE `option`
 
 -- 장바구니(담긴상품정보)
 CREATE TABLE `cart` (
-	`no`        INT UNSIGNED NOT NULL COMMENT '장바구니번호', -- 장바구니번호
-	`amount`    INT UNSIGNED NOT NULL COMMENT '수량', -- 수량
-	`option_no` INT UNSIGNED NOT NULL COMMENT '옵션번호', -- 옵션번호
-	`member_no` INT UNSIGNED NOT NULL COMMENT '회원번호' -- 회원번호
+	`no`            INT UNSIGNED NOT NULL COMMENT '장바구니번호', -- 장바구니번호
+	`amount`        INT UNSIGNED NOT NULL COMMENT '수량', -- 수량
+	`non_member_no` INT UNSIGNED NULL     COMMENT '비회원번호', -- 비회원번호
+	`option_no`     INT UNSIGNED NOT NULL COMMENT '옵션번호', -- 옵션번호
+	`member_no`     INT UNSIGNED NULL     COMMENT '회원번호' -- 회원번호
 )
 COMMENT '장바구니(담긴상품정보)';
 
@@ -353,8 +354,9 @@ ALTER TABLE `order_detail`
 
 -- 고정옵션
 CREATE TABLE `fixedoption` (
-	`no`   INT UNSIGNED NOT NULL COMMENT '고정옵션번호', -- 고정옵션번호
-	`name` VARCHAR(100) NOT NULL COMMENT '옵션이름(사이즈,컬러 등)' -- 옵션이름(사이즈,컬러 등)
+	`no`    INT UNSIGNED NOT NULL COMMENT '고정옵션번호', -- 고정옵션번호
+	`name`  VARCHAR(100) NOT NULL COMMENT '옵션이름(사이즈,컬러 등)', -- 옵션이름(사이즈,컬러 등)
+	`value` VARCHAR(100) NOT NULL COMMENT '옵션값' -- 옵션값
 )
 COMMENT '고정옵션';
 
