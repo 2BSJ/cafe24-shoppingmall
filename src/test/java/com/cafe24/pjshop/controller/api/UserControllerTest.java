@@ -239,6 +239,7 @@ public class UserControllerTest {
 		UserVo userVo = new UserVo();		
 		
 		//1. 업데이트 성공 케이스==================================
+		//1.1 전부폼에있을때
 		//수정불가 데이터
 		userVo.setNo(1L);
 		userVo.setName("양승준");
@@ -250,6 +251,28 @@ public class UserControllerTest {
 		userVo.setEmail("h3tmdwns@gmail.com");
 		userVo.setPhoneNumber("010-9136-4365");
 		userVo.setPassword("test123!!!!");
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/user")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(userVo)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk());
+		//1.2 중간중간만 수정하였을때
+		//수정불가 데이터
+		UserVo userVo1 = new UserVo();
+		userVo1.setNo(1L);
+		userVo1.setName("양승준");
+		userVo1.setId("yyg0825");
+		userVo1.setGender("남");
+		
+		//수정가능 데이터
+		userVo1.setAddress("경기도 남양주시 평내동");
+		userVo1.setEmail("h3tmdwns@gmail.com");
+		userVo1.setPhoneNumber("010-9136-4365");
 		
 		resultActions =
 		mockMvc
@@ -295,7 +318,7 @@ public class UserControllerTest {
 
 		ResultActions resultActions;		
 		String name = "양승준";
-		String email = "yyg0825@naver.com";
+		String email = "h3tmdwns@gmail.com";
 		//1. Id찾기 성공 케이스==================================
 
 		resultActions =
@@ -337,7 +360,7 @@ public class UserControllerTest {
 		mockMvc
 		.perform(get("/api/user/find/password")
 		.param("id", "test1")
-		.param("email", "yyg0825@naver.com")
+		.param("email", "h3tmdwns@gmail.com")
 		.param("phone", "010-9136-4365")
 		.contentType(MediaType.APPLICATION_JSON));
 		

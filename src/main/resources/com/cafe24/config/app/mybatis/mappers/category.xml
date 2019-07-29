@@ -13,7 +13,7 @@
 			]]>
 		</if>
 		
-		<if test="_parameter == 0">
+		<if test="_parameter == 0"> <!-- 상위 카테고리를 가져오는 경우이니까 depth가 0인 category만 get -->
 			<![CDATA[
 			WHERE depth = 1	
 			]]>
@@ -28,26 +28,39 @@
 		]]>
 	</select>
 	
-	<insert id="insertTopCategory" parameterType='categoryvo'>
-		<![CDATA[	 
-		INSERT
-		INTO category
-		VALUES(null,
-			 #{name},
-			  	1,
-			   (select ifnull(MAX(tmp.group_no)+1, 1) from category tmp))
-		]]>
+	<insert id="insertCategory" parameterType='categoryvo'>
+		<choose>
+		
+		<when test='depth != 0'>
+			<![CDATA[	
+			INSERT
+			INTO category
+			VALUES(null,
+				 #{name},
+				  	#{depth},
+				   #{groupNo})
+			]]>
+		</when>
+		
+		<otherwise>
+			<![CDATA[	 
+			INSERT
+			INTO category
+			VALUES(null,
+				 #{name},
+				  	1,
+				   (select ifnull(MAX(tmp.group_no)+1, 1) from category tmp))
+			]]>
+		</otherwise>
+		</choose>
 	</insert>
 	
-	<insert id="insertLowCategory" parameterType='categoryvo'>
-		<![CDATA[	 
-		INSERT
-		INTO category
-		VALUES(null,
-			 #{name},
-			  	#{depth},
-			   #{groupNo}
+	<delete id="deleteCategory" parameterType='long'>
+		<![CDATA[
+			DELETE
+			FROM category
+			WHERE no = #{parameter_no}
 		]]>
-	</insert>
-
+	</delete>
+	
 </mapper>

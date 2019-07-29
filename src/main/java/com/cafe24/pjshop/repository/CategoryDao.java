@@ -14,9 +14,9 @@ public class CategoryDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int addTopCategory(CategoryVo categoryVo) {
+	public int addCategory(CategoryVo categoryVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("category.insertTopCategory",categoryVo);
+		return sqlSession.insert("category.insertCategory",categoryVo);
 	}
 
 	public int checkName(String name) {
@@ -28,5 +28,11 @@ public class CategoryDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("category.getVoByGroupNo",groupNo);
 	}
+
+	public int deleteCategory(Long no) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("category.deleteCategory",no);
+	}
+	
 
 }

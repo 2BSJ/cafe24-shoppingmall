@@ -81,7 +81,7 @@ public class UserController {
 			}
 		}
 		int result = userService.join(userVo);
-		if((result = userService.join(userVo)) == 1)
+		if(result == 1)
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("회원가입 실패"));

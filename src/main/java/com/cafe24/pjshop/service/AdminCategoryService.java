@@ -15,9 +15,9 @@ public class AdminCategoryService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public int addTopCategory(CategoryVo categoryVo) {
+	public int addCategory(CategoryVo categoryVo) {
 		// TODO Auto-generated method stub
-		return categoryDao.addTopCategory(categoryVo);
+		return categoryDao.addCategory(categoryVo);
 	}
 
 	public int checkName(String name) {
@@ -25,7 +25,7 @@ public class AdminCategoryService {
 		return categoryDao.checkName(name);
 	}
 
-	public List<CategoryVo> getList(Optional<Integer> groupNo) {
+	public List<CategoryVo> getCategoryList(Optional<Integer> groupNo) {
 		// TODO Auto-generated method stub
 		if(groupNo.isPresent()) {
 			//상위 카테고리를 선택했을때 하위 카테고리 getList
@@ -35,6 +35,11 @@ public class AdminCategoryService {
 			//제일 상위 카테고리 getList
 			return categoryDao.getList(0);
 		}
+	}
+
+	public int deleteCategory(Long no) {
+		// TODO Auto-generated method stub
+		return categoryDao.deleteCategory(no);
 	}
 
 }

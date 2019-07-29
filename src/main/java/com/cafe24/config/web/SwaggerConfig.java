@@ -20,7 +20,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.cafe24.pjshop.controller.api")) // 베이스 패키지에 있는
+                .apis(RequestHandlerSelectors.basePackage("com.cafe24.pjshop.controller")) // 베이스 패키지에 있는
                 .paths(PathSelectors.any()) // 모든 url들
                 .build();
 

@@ -41,7 +41,7 @@ public class CategoryVo {
 	public int getGroupNo() {
 		return groupNo;
 	}
-	public void setGroup(int groupNo) {
+	public void setGroupNo(int groupNo) {
 		this.groupNo = groupNo;
 	}
 }

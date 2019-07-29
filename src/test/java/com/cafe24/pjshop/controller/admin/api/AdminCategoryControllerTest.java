@@ -1,12 +1,12 @@
 package com.cafe24.pjshop.controller.admin.api;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -15,14 +15,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.TestAppConfig;
@@ -55,10 +53,10 @@ public class AdminCategoryControllerTest {
 	@Test
 	public void testAgetList() throws Exception{
 		ResultActions resultActions;		
-		//1. 중복체크 된 case ==================================
+		//1. 처음에 들어있던 category Get ==================================
 		resultActions =
 		mockMvc
-		.perform(get("/api/admin/category")
+		.perform(get("/api/admin/category/list")
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
@@ -103,23 +101,95 @@ public class AdminCategoryControllerTest {
 	
 	// 상위 카테고리 추가
 	@Test
-	public void testCaddTopCategory() throws Exception{
+	public void testCAddCategory() throws Exception{
 		ResultActions resultActions;
-		CategoryVo categoryVo = new CategoryVo();		
+		CategoryVo categoryVo1 = new CategoryVo();		
 			
-		//1. 업데이트 성공 케이스==================================
+		//1. 최상위 카테고리 추가 케이스==================================
 		//수정불가 데이터
-		categoryVo.setName("신발");
+		categoryVo1.setName("신발");
 		
 		resultActions =
 		mockMvc
 		.perform(post("/api/admin/category")
 		.contentType(MediaType.APPLICATION_JSON)
-		.content(new Gson().toJson(categoryVo)));
+		.content(new Gson().toJson(categoryVo1)));
 		
 		resultActions
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.data",is(true)));
 		
+		//2. 하위 카테고리 추가 케이스============================
+		CategoryVo categoryVo2 = new CategoryVo();	
+		categoryVo2.setName("샌달");
+		categoryVo2.setDepth(2);
+		categoryVo2.setGroupNo(2);
+		
+		resultActions =
+		mockMvc
+		.perform(post("/api/admin/category")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(categoryVo2)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.data",is(true)));
+		
+	}	
+	
+	//상위 카테고리 추가하고나서 get
+	@Test
+	public void testDGetListAfterAddCategory() throws Exception{
+		ResultActions resultActions;		
+		//1. 상위카테고리 추가하고 나서 get ==================================
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/category/list")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data[0].name", is("상의")))
+		.andExpect(jsonPath("$.data[1].name", is("신발")));
+		
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/category/list/2")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data[0].name", is("신발")));
+
+	}	
+	
+	@Test
+	public void testEDeleteCategory() throws Exception{
+		ResultActions resultActions;	
+		CategoryVo categoryVo1 = new CategoryVo();	
+		//1. delete 성공 case ==================================
+		categoryVo1.setNo(1L);
+		categoryVo1.setName("옷");
+		categoryVo1.setDepth(1);
+		categoryVo1.setGroupNo(1);
+		resultActions =
+		mockMvc
+		.perform(delete("/api/admin/category")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(categoryVo1)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(true)));
+		
+
 	}	
 }
