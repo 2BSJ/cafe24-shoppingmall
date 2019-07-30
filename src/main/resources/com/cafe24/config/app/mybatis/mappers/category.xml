@@ -19,6 +19,14 @@
 			]]>
 		</if>
 	</select>		
+	
+	<select id="countByNo" parameterType='long' resultType="int">
+		<![CDATA[	 
+		SELECT count(*)
+		  FROM category
+		 WHERE no = #{no}
+		]]>
+	</select>
 			
 	<select id="countByName" parameterType='string' resultType="int">
 		<![CDATA[	 

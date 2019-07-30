@@ -2,27 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product">
 
-	<insert id="insertProduct" parameterType='categoryvo'>
-	<![CDATA[
-	INSERT
-	INTO product
-	VALUES(null,
-		   #{name},
-		   #{simpleDescription},
-		   #{description},
-		   #{manufacture},
-		   0,
-		   #{price},
-		   #{deliverycost},
-		   #{displayStatus},
-		   #{salesStatus},
-		   #{specialStatus},
-		   #{titleStatus},
-		   #{couponStatus},
-		   #{categoryNo}
-		   )
-	]]>
-	</insert>	
+	<insert id="insertVo" parameterType='productvo'>
+		<![CDATA[
+		INSERT
+		INTO product
+		VALUES(null,
+			   #{name},
+			   #{simpleDescription},
+			   #{description},
+			   #{manufacture},
+			   0,
+			   #{price},
+			   #{deliverycost},
+			   #{displayStatus},
+			   #{salesStatus},
+			   #{specialStatus},
+			   #{titleStatus},
+			   #{couponStatus},
+			   now(),
+			   now(),
+			   #{categoryNo}
+			   )
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+		        SELECT LAST_INSERT_ID()
+			]]>
+	    </selectKey>
+	</insert>
+	
+	<select id="getListBySetting" parameterType="map" resultType="productvo">
+		SELECT *
+		FROM product
+		<where>
+			<if test="name != null">
+				<![CDATA[
+				name = #{name}
+				]]>
+			</if>
+			<if test="categoryNo != 0">
+				<![CDATA[
+				and category_no = #{categoryNo}
+				]]>
+			</if>
+			<if test="displayStatus != null">
+				<![CDATA[
+				and display_status = #{displayStatus}
+				]]>
+			</if>
+			<if test="salesStatus != null">
+				<![CDATA[
+				and sales_status = #{salesStatus}
+				]]>
+			</if>
+		</where>
+	</select>
+	
+	
+
 
 	
 </mapper>

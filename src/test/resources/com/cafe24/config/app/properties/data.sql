@@ -22,4 +22,70 @@ INSERT
 		VALUES(null, '상의', 1, (select 
 								ifnull(MAX(tmp.group_no)+1, 1) 
 								from category tmp));
+
+/* Admin Product Data*/
+/* 기본 상품 값 추가 */
+INSERT
+	INTO product
+		VALUES(null,
+			   '나이키 저스트두잇 티셔츠',
+			   '나이키X양승준 콜라보 제품입니다',
+			   '<div><span>나이키 두잇 X 양승준 콜라보 어쩌고저쩌고 전체 설명</span></div>',
+			   '미국',
+			   0,
+			   56000,
+			   5000,
+			   'y',
+			   'n',
+			   'n',
+			   'y',
+			   'n',
+			   now(),
+			   now(),
+			   1
+			   );
+/*상품의 옵션*/
+INSERT
+	INTO cafe24.option
+		VALUES(null,
+			   '빨강/S',
+			   2000,
+			   100,
+			   1
+			   );
+INSERT
+	INTO cafe24.option
+		VALUES(null,
+			   '빨강/M',
+			   2000,
+			   100,
+			   1
+			   );
+INSERT
+	INTO cafe24.option
+		VALUES(null,
+			   '빨강/L',
+			   2000,
+			   100,
+			   1
+			   );
+			   
+/*상품의 이미지*/
+INSERT
+	INTO cafe24.image
+		VALUES(null,
+			   '201907201400.jpg',
+			   '/img',
+			   'y',
+			   1);
+			   
+INSERT
+	INTO cafe24.image
+		VALUES(null,
+			   '201907201401.jpg',
+			   '/img',
+			   'n',
+			   1);
+	
+			   
 								

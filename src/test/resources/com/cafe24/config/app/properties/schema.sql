@@ -6,10 +6,6 @@ ALTER TABLE `product`
 ALTER TABLE `option`
 	DROP FOREIGN KEY `FK_product_TO_option`; -- 상품 -> 상품옵션
 
--- 상품옵션
-ALTER TABLE `option`
-	DROP FOREIGN KEY `FK_fixedoption_TO_option`; -- 고정옵션 -> 상품옵션
-
 -- 장바구니(담긴상품정보)
 ALTER TABLE `cart`
 	DROP FOREIGN KEY `FK_option_TO_cart`; -- 상품옵션 -> 장바구니(담긴상품정보)
@@ -90,7 +86,7 @@ DROP TABLE IF EXISTS `customer_agreement` RESTRICT;
 -- 주문상세
 DROP TABLE IF EXISTS `order_detail` RESTRICT;
 
--- 고정옵션
+-- 고정옵션(필요없나?)
 DROP TABLE IF EXISTS `fixedoption` RESTRICT;
 
 -- 회원
@@ -136,6 +132,8 @@ CREATE TABLE `product` (
 	`special_status`     VARCHAR(10)  NOT NULL COMMENT '특별상품여부', -- 특별상품여부
 	`title_status`       VARCHAR(10)  NOT NULL COMMENT '대표상품여부', -- 대표상품여부
 	`coupon_status`      VARCHAR(10)  NOT NULL COMMENT '쿠폰적용여부', -- 쿠폰적용여부
+	`reg_date`           DATETIME     NOT NULL COMMENT '등록일', -- 등록일
+	`modify_reg_date`    DATETIME     NULL     COMMENT '수정일', -- 수정일
 	`category_no`        INT UNSIGNED NULL     COMMENT '카테고리번호' -- 카테고리번호
 )
 COMMENT '상품';
@@ -152,12 +150,11 @@ ALTER TABLE `product`
 
 -- 상품옵션
 CREATE TABLE `option` (
-	`no`             INT UNSIGNED NOT NULL COMMENT '옵션번호', -- 옵션번호
-	`value`          VARCHAR(100) NOT NULL COMMENT '완성된옵션값(빨강/M,검흰/260)', -- 완성된옵션값(빨강/M,검흰/260)
-	`price`          INT UNSIGNED NOT NULL COMMENT '옵션추가가격', -- 옵션추가가격
-	`stock`          INT UNSIGNED NOT NULL COMMENT '재고', -- 재고
-	`product_no`     INT UNSIGNED NOT NULL COMMENT '상품번호', -- 상품번호
-	`fixedoption_no` INT UNSIGNED NOT NULL COMMENT '고정옵션번호' -- 고정옵션번호
+	`no`         INT UNSIGNED NOT NULL COMMENT '옵션번호', -- 옵션번호
+	`value`      VARCHAR(100) NOT NULL COMMENT '완성된옵션값(빨강/M,검흰/260)', -- 완성된옵션값(빨강/M,검흰/260)
+	`price`      INT UNSIGNED NOT NULL COMMENT '옵션추가가격', -- 옵션추가가격
+	`stock`      INT UNSIGNED NOT NULL COMMENT '재고', -- 재고
+	`product_no` INT UNSIGNED NOT NULL COMMENT '상품번호' -- 상품번호
 )
 COMMENT '상품옵션';
 
@@ -352,17 +349,20 @@ ALTER TABLE `order_detail`
 			`no` -- 주문상세번호
 		);
 
--- 고정옵션
+ALTER TABLE `order_detail`
+	MODIFY COLUMN `no` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '주문상세번호';
+
+-- 고정옵션(필요없나?)
 CREATE TABLE `fixedoption` (
 	`no`    INT UNSIGNED NOT NULL COMMENT '고정옵션번호', -- 고정옵션번호
 	`name`  VARCHAR(100) NOT NULL COMMENT '옵션이름(사이즈,컬러 등)', -- 옵션이름(사이즈,컬러 등)
 	`value` VARCHAR(100) NOT NULL COMMENT '옵션값' -- 옵션값
 )
-COMMENT '고정옵션';
+COMMENT '고정옵션(필요없나?)';
 
--- 고정옵션
+-- 고정옵션(필요없나?)
 ALTER TABLE `fixedoption`
-	ADD CONSTRAINT `PK_fixedoption` -- 고정옵션 기본키
+	ADD CONSTRAINT `PK_fixedoption` -- 고정옵션(필요없나?) 기본키
 		PRIMARY KEY (
 			`no` -- 고정옵션번호
 		);
@@ -385,16 +385,6 @@ ALTER TABLE `option`
 		)
 		REFERENCES `product` ( -- 상품
 			`no` -- 상품번호
-		);
-
--- 상품옵션
-ALTER TABLE `option`
-	ADD CONSTRAINT `FK_fixedoption_TO_option` -- 고정옵션 -> 상품옵션
-		FOREIGN KEY (
-			`fixedoption_no` -- 고정옵션번호
-		)
-		REFERENCES `fixedoption` ( -- 고정옵션
-			`no` -- 고정옵션번호
 		);
 
 -- 장바구니(담긴상품정보)

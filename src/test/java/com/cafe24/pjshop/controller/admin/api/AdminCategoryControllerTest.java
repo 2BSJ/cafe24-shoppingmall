@@ -1,9 +1,9 @@
 package com.cafe24.pjshop.controller.admin.api;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,12 +15,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.TestAppConfig;
@@ -166,6 +168,7 @@ public class AdminCategoryControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data[0].name", is("신발")));
+		
 
 	}	
 	
@@ -237,7 +240,7 @@ public class AdminCategoryControllerTest {
 	@Test
 	public void testFGetListAfterAllCategoryDelete() throws Exception{
 		ResultActions resultActions;		
-		//1. 상위카테고리 추가하고 나서 get ==================================
+		
 		resultActions =
 		mockMvc
 		.perform(get("/api/admin/category/list")
@@ -247,6 +250,8 @@ public class AdminCategoryControllerTest {
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("fail")));
+		
+		testCAddCategory();
 		
 
 	}	
