@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,10 +28,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.TestAppConfig;
 import com.cafe24.pjshop.config.TestWebConfig;
+import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.vo.ImageVo;
 import com.cafe24.pjshop.vo.OptionVo;
 import com.cafe24.pjshop.vo.ProductVo;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestAppConfig.class,TestWebConfig.class})
@@ -131,7 +134,8 @@ public class AdminProductControllerTest {
 	@Test
 	public void testBGetProductList() throws Exception{
 		ResultActions resultActions;		
-	
+	// 1. 성공 case==================================
+	//1.1 처음 관리자 상품목록 들어왔을때
 		resultActions =
 		mockMvc
 		.perform(get("/api/admin/product")
@@ -140,8 +144,68 @@ public class AdminProductControllerTest {
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data[0].name",is("나이키 저스트두잇 티셔츠")))
+		.andExpect(jsonPath("$.data[1].name",is("아디다스 티셔츠")));
+	//1.2 상품목록에서 검색어와 category를 선택했을때
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/product")
+		.param("name", "아디다스") // like % % 
+		.param("categoryNo", "1")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
+	//1.3 판매중이지 않은 상품만 조회했을때
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/product")
+		.param("salesStatus", "n")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data[0].salesStatus",is("n")));
+	//2. 상품목록 조회 실패 case==================
+	//2.1 데이터가 없을경우
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/product")
+		.param("categoryNo", "5")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("fail")));
+	}
+	
+	// 상품목록조회중에 하나를 클릭했을때
+	@Test
+	public void testCGetProductDetail() throws Exception{
+		ResultActions resultActions;
+	// 1. 성공 case==================================
+	//1.1 처음 관리자 상품목록 들어왔을때
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/product/1")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")));
 		
+//		String content = resultActions.andReturn().getResponse().getContentAsString();
+//		Gson gson = new Gson();
+//		JSONResult jsonResult = gson.fromJson(content, JSONResult.class);
+//		ProductVo productVo = (ProductVo) jsonResult.getData();
+//		System.out.println(productVo.getDeliverycost() + "!!!!!!!!!!!");
 
 		
 

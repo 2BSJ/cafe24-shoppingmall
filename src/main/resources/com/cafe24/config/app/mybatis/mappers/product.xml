@@ -31,13 +31,23 @@
 	    </selectKey>
 	</insert>
 	
+	<select id="countByNo" parameterType="long">
+		<![CDATA[
+		SELECT count(*)
+		FROM product
+		WHERE no = #{parameter}
+		]]>
+	</select>
+	
 	<select id="getListBySetting" parameterType="map" resultType="productvo">
+		<![CDATA[
 		SELECT *
 		FROM product
+		]]>
 		<where>
 			<if test="name != null">
 				<![CDATA[
-				name = #{name}
+				 name LIKE concat('%',#{name},'%')
 				]]>
 			</if>
 			<if test="categoryNo != 0">
@@ -58,7 +68,60 @@
 		</where>
 	</select>
 	
+	<select id="getProductVoByNo" parameterType="long" resultMap="productVoMap">
+		<![CDATA[
+		SELECT *
+		FROM product
+		WHERE no = #{no}
+		]]>
+	</select>
 	
+	<select id="getOptionListByNo" parameterType="long" resultType="optionvo">
+		<![CDATA[
+		SELECT *
+		FROM option
+		WHERE product_no = #{no}
+		]]>
+	</select>
+	
+	<select id="getImageListByNo" parameterType="long" resultType="imagevo">
+		<![CDATA[
+		SELECT *
+		FROM image
+		WHERE product_no = #{no}
+		]]>
+	</select>
+
+	<select id="getReviewListByNo" parameterType="long" resultType="reviewvo">
+		<![CDATA[
+		SELECT *
+		FROM review
+		WHERE product_no = #{no}
+		]]>
+	</select>	
+	
+					<!-- result Map -->
+	<resultMap type="productvo" id="productVoMap">
+		<id property="no" column="no"/>
+		<result property="name" column="name"/>
+		<result property="simpleDescription" column="simple_description"/>
+		<result property="description" column="description"/>
+		<result property="manufacture" column="manufacture"/>
+		<result property="buycount" column="buycount"/>
+		<result property="price" column="price"/>
+		<result property="deliverycost" column="deliverycost"/>
+		<result property="displayStatus" column="display_status"/>
+		<result property="salesStatus" column="sales_status"/>
+		<result property="specialStatus" column="special_status"/>
+		<result property="titleStatus" column="title_status"/>
+		<result property="couponStatus" column="coupon_status"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="modifyRegDate" column="modifyReg_date"/>
+		<result property="categoryNo" column="category_no"/>
+		<collection property="optionList" column="no" select="getOptionListByNo"></collection>
+		<collection property="imageList" column="no" select="getImageListByNo"></collection>
+		<collection property="reviewList" column="no" select="getReviewListByNo"></collection>
+	</resultMap>
 
 
 	

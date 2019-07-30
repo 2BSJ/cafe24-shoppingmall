@@ -55,6 +55,15 @@ public class AdminProductService {
 		map.put("salesStatus",salesStatus);
 		return productDao.getList(map);
 	}
+
+	public ProductVo getProductDetail(Long no) {
+		//if(productDao.countByNo(no)==0)
+		if(1==2)
+			return null;
+		else {
+			return productDao.getProductDetail(no);
+		}
+	}
 	
 
 

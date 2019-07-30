@@ -26,6 +26,14 @@ public class ProductDao {
 		return sqlSession.insert("product.insertVo",productVo);
 	}
 	
+	public List<ProductVo> getList(Map<String,Object> map) {
+		return sqlSession.selectList("product.getListBySetting",map);
+	}
+	
+	public int countByNo(Long no) {
+		return sqlSession.selectOne("product.countByNo",no);
+	}
+	
 	public int insertOption(OptionVo optionVo) {
 		return sqlSession.insert("option.insertVo",optionVo);
 	}
@@ -34,8 +42,10 @@ public class ProductDao {
 		return sqlSession.insert("image.insertVo",imageVo);
 	}
 
-	public List<ProductVo> getList(Map<String,Object> map) {
-		return sqlSession.selectList("product.getListBySetting",map);
+	public ProductVo getProductDetail(Long no) {
+		return sqlSession.selectOne("product.getProductVoByNo",no);
 	}
+
+
 
 }

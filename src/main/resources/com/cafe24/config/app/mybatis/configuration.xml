@@ -12,6 +12,7 @@
 		<typeAlias alias="productvo" type="com.cafe24.pjshop.vo.ProductVo"/>
 		<typeAlias alias="imagevo" type="com.cafe24.pjshop.vo.ImageVo"/>
 		<typeAlias alias="optionvo" type="com.cafe24.pjshop.vo.OptionVo"/>
+		<typeAlias alias="reviewvo" type="com.cafe24.pjshop.vo.ReviewVo"/>
     </typeAliases>
 	
 	<mappers>
