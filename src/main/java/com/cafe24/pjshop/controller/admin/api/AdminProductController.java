@@ -1,6 +1,11 @@
 package com.cafe24.pjshop.controller.admin.api;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +19,7 @@ import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.service.AdminProductService;
 import com.cafe24.pjshop.vo.CategoryVo;
 import com.cafe24.pjshop.vo.ProductVo;
+import com.cafe24.pjshop.vo.UserVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,9 +40,10 @@ public class AdminProductController {
 		@RequestMapping(method = RequestMethod.POST)
 		public ResponseEntity<JSONResult> addProduct(
 				@RequestBody ProductVo productVo) {
-		int result = adminProductService.addProduct(productVo);
+
 			
-			return null;
+			int result = adminProductService.addProduct(productVo);
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 				
 		}
 		

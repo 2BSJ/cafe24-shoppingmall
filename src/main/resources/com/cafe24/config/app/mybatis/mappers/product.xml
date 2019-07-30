@@ -3,43 +3,25 @@
 <mapper namespace="product">
 
 	<insert id="insertProduct" parameterType='categoryvo'>
+	<![CDATA[
 	INSERT
 	INTO product
 	VALUES(null,
 		   #{name},
-		   #{simple_description},
+		   #{simpleDescription},
 		   #{description},
 		   #{manufacture},
 		   0,
 		   #{price},
 		   #{deliverycost},
-		   #{display_status},
+		   #{displayStatus},
+		   #{salesStatus},
+		   #{specialStatus},
+		   #{titleStatus},
+		   #{couponStatus},
+		   #{categoryNo}
 		   )
-		<choose>
-		
-		<when test='depth != 0'>
-			<![CDATA[	
-			INSERT
-			INTO category
-			VALUES(null,
-				 #{name},
-				  	#{depth},
-				   #{groupNo})
-			]]>
-		</when>
-		
-		<otherwise>
-			<![CDATA[	 
-			INSERT
-			INTO category
-			VALUES(null,
-				 #{name},
-				  	1,
-				   (select ifnull(MAX(tmp.group_no)+1, 1) from category tmp))
-			]]>
-			<!--  null일 경우 groupNo를 1로 셋팅해주고 아닐경우 맥스값에서 +1 -->
-		</otherwise>
-		</choose>
+	]]>
 	</insert>	
 
 	

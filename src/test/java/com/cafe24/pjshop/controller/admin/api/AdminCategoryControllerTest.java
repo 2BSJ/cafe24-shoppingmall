@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //@Rollback(value = true)
 //@Transactional
-public class AdminCategoryControllerTest {
+public class AdminCategoryControllerTest { 
 	
 	private MockMvc mockMvc;
 	

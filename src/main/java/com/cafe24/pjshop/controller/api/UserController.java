@@ -173,36 +173,36 @@ public class UserController {
 	
 	
 	
-// 구현 전
-	@ApiOperation(value="장바구니담기", notes ="장바구니담기 API")
-	@RequestMapping(value = "/cart/{no}", method = RequestMethod.POST)
-	public JSONResult addcart(
-			@PathVariable(value="no") Long no) {
-		
-		boolean result = userService.addcart(no);
-		if(result) {
-			return JSONResult.success("addcart success");
-		}
-		else {
-			return JSONResult.fail("addcart fail");
-		}
-		
-	}
-	
-	@ApiOperation(value="장바구니삭제", notes ="장바구니삭제 API")
-	@RequestMapping(value = "/cart/{no}", method = RequestMethod.DELETE)
-	public JSONResult deletecart(
-			@PathVariable(value="no") Long no) {
-		
-		boolean result = userService.deletecart(no);
-		if(result) {
-			return JSONResult.success("deletecart success");
-		}
-		else {
-			return JSONResult.fail("deletecart fail");
-		}
-		
-	}
+//// 구현 전
+//	@ApiOperation(value="장바구니담기", notes ="장바구니담기 API")
+//	@RequestMapping(value = "/cart/{no}", method = RequestMethod.POST)
+//	public JSONResult addcart(
+//			@PathVariable(value="no") Long no) {
+//		
+//		boolean result = userService.addcart(no);
+//		if(result) {
+//			return JSONResult.success("addcart success");
+//		}
+//		else {
+//			return JSONResult.fail("addcart fail");
+//		}
+//		
+//	}
+//	
+//	@ApiOperation(value="장바구니삭제", notes ="장바구니삭제 API")
+//	@RequestMapping(value = "/cart/{no}", method = RequestMethod.DELETE)
+//	public JSONResult deletecart(
+//			@PathVariable(value="no") Long no) {
+//		
+//		boolean result = userService.deletecart(no);
+//		if(result) {
+//			return JSONResult.success("deletecart success");
+//		}
+//		else {
+//			return JSONResult.fail("deletecart fail");
+//		}
+//		
+//	}
 	
 	
 	
