@@ -66,7 +66,7 @@ public class ProductController {
 	public ResponseEntity<JSONResult> getProductDetail(
 			@PathVariable(value="no") Long no) {
 		
-		
+		//d
 		ProductVo productVo = productService.getProductDetail(no);
 		
 		if(productVo != null)
