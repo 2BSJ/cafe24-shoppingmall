@@ -36,6 +36,7 @@ public class ProductVo {
 		private String couponStatus;
 		private String regDate;
 		private String modifyRegDate;
+		private String productStatus;
 		private Long categoryNo;
 		
 		private List<OptionVo> optionList; // front에서 ajax로 완성된 옵션배합을 value값에 넣어서 같이 보내줌

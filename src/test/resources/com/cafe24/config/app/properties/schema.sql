@@ -119,22 +119,23 @@ ALTER TABLE `user`
 
 -- 상품
 CREATE TABLE `product` (
-	`no`                 INT UNSIGNED NOT NULL COMMENT '상품번호', -- 상품번호
-	`name`               VARCHAR(50)  NOT NULL COMMENT '상품명', -- 상품명
-	`simple_description` VARCHAR(60)  NULL     COMMENT '요약설명', -- 요약설명
-	`description`        TEXT         NOT NULL COMMENT '상세설명', -- 상세설명
-	`manufacture`        VARCHAR(50)  NOT NULL COMMENT '제조사', -- 제조사
-	`buycount`           INT UNSIGNED NULL     COMMENT '구매횟수', -- 구매횟수
-	`price`              INT UNSIGNED NOT NULL COMMENT '대표판매가격', -- 대표판매가격
-	`deliverycost`       INT UNSIGNED NOT NULL COMMENT '배송비', -- 배송비
-	`display_status`     VARCHAR(10)  NOT NULL COMMENT '진열상태', -- 진열상태
-	`sales_status`       VARCHAR(10)  NOT NULL COMMENT '판매상태', -- 판매상태
-	`special_status`     VARCHAR(10)  NOT NULL COMMENT '특별상품여부', -- 특별상품여부
-	`title_status`       VARCHAR(10)  NOT NULL COMMENT '대표상품여부', -- 대표상품여부
-	`coupon_status`      VARCHAR(10)  NOT NULL COMMENT '쿠폰적용여부', -- 쿠폰적용여부
-	`reg_date`           DATETIME     NOT NULL COMMENT '등록일', -- 등록일
-	`modify_reg_date`    DATETIME     NULL     COMMENT '수정일', -- 수정일
-	`category_no`        INT UNSIGNED NULL     COMMENT '카테고리번호' -- 카테고리번호
+	`no`                 INT UNSIGNED  NOT NULL COMMENT '상품번호', -- 상품번호
+	`name`               VARCHAR(50)   NOT NULL COMMENT '상품명', -- 상품명
+	`simple_description` VARCHAR(60)   NULL     COMMENT '요약설명', -- 요약설명
+	`description`        TEXT          NOT NULL COMMENT '상세설명', -- 상세설명
+	`manufacture`        VARCHAR(50)   NOT NULL COMMENT '제조사', -- 제조사
+	`buycount`           INT UNSIGNED  NULL     COMMENT '구매횟수', -- 구매횟수
+	`price`              INT UNSIGNED  NOT NULL COMMENT '대표판매가격', -- 대표판매가격
+	`deliverycost`       INT UNSIGNED  NOT NULL COMMENT '배송비', -- 배송비
+	`display_status`     VARCHAR(10)   NOT NULL COMMENT '진열상태', -- 진열상태
+	`sales_status`       VARCHAR(10)   NOT NULL COMMENT '판매상태', -- 판매상태
+	`special_status`     VARCHAR(10)   NOT NULL COMMENT '특별상품여부', -- 특별상품여부
+	`title_status`       VARCHAR(10)   NOT NULL COMMENT '대표상품여부', -- 대표상품여부
+	`coupon_status`      VARCHAR(10)   NOT NULL COMMENT '쿠폰적용여부', -- 쿠폰적용여부
+	`reg_date`           DATETIME      NOT NULL COMMENT '등록일', -- 등록일
+	`modify_reg_date`    DATETIME      NULL     COMMENT '수정일', -- 수정일
+	`product_status`     enum('y','n') NOT NULL DEFAULT 'y' COMMENT '상태', -- 상태
+	`category_no`        INT UNSIGNED  NULL     COMMENT '카테고리번호' -- 카테고리번호
 )
 COMMENT '상품';
 

@@ -5,7 +5,8 @@
 	<insert id="insertVo" parameterType='productvo'>
 		<![CDATA[
 		INSERT
-		INTO product
+		INTO product(no,name,simple_description,description,manufacture,buycount,price,deliverycost,
+		display_status,sales_status,special_status,title_status,coupon_status,reg_date,modify_reg_date,category_no)
 		VALUES(null,
 			   #{name},
 			   #{simpleDescription},
@@ -31,11 +32,11 @@
 	    </selectKey>
 	</insert>
 	
-	<select id="countByNo" parameterType="long">
+	<select id="countByNo" parameterType="long" resultType="int">
 		<![CDATA[
 		SELECT count(*)
 		FROM product
-		WHERE no = #{parameter}
+		WHERE no = #{no}
 		]]>
 	</select>
 	
@@ -65,6 +66,9 @@
 				and sales_status = #{salesStatus}
 				]]>
 			</if>
+				<![CDATA[
+				and product_status ='y'
+				]]>
 		</where>
 	</select>
 	
@@ -99,6 +103,88 @@
 		WHERE product_no = #{no}
 		]]>
 	</select>	
+	
+	<update id="updateVo" parameterType="productvo">
+		<![CDATA[
+		UPDATE product
+		]]>
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="name != null">
+			<![CDATA[
+			name=#{name},
+			]]>
+		</if>
+		<if test="simpleDescription != null">
+			<![CDATA[
+			simple_description=#{simpleDescription},
+			]]>
+		</if>
+		<if test="description != null">
+			<![CDATA[
+			description=#{description},
+			]]>
+		</if>
+		<if test="manufacture != null">
+			<![CDATA[
+			manufacture=#{manufacture},
+			]]>
+		</if>
+		<if test="buycount != 0">
+			<![CDATA[
+			buycount=#{buycount},
+			]]>
+		</if>
+		<if test="price != 0">
+			<![CDATA[
+			price=#{price},
+			]]>
+		</if>
+		<if test="deliverycost != 0">
+			<![CDATA[
+			deliverycost=#{deliverycost},
+			]]>
+		</if>
+		<if test="displayStatus != null">
+			<![CDATA[
+			display_status=#{displayStatus},
+			]]>
+		</if>
+		<if test="salesStatus != null">
+			<![CDATA[
+			sales_status=#{salesStatus},
+			]]>
+		</if>
+		<if test="specialStatus != null">
+			<![CDATA[
+			special_status=#{specialStatus},
+			]]>
+		</if>
+		<if test="titleStatus != null">
+			<![CDATA[
+			title_status=#{titleStatus},
+			]]>
+		</if>
+		<if test="couponStatus != null">
+			<![CDATA[
+			coupon_status=#{couponStatus}
+			]]>
+		</if>   
+		<![CDATA[
+		 modify_reg_date = now()
+		 WHERE no = #{no}      	 
+		]]>
+		</trim>
+	</update>
+	
+	<update id="deleteVo" parameterType="java.util.List">
+		<foreach collection="list" item="item"  separator=";">
+		     <![CDATA[
+					UPDATE product 
+					SET product_status = 'n' 
+					WHERE no = #{item.value} 	
+		     ]]>
+   		</foreach>
+	</update>
 	
 					<!-- result Map -->
 	<resultMap type="productvo" id="productVoMap">

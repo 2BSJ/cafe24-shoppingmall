@@ -3,6 +3,8 @@ package com.cafe24.pjshop.controller.admin.api;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -10,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -28,12 +29,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.pjshop.config.TestAppConfig;
 import com.cafe24.pjshop.config.TestWebConfig;
-import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.vo.ImageVo;
 import com.cafe24.pjshop.vo.OptionVo;
 import com.cafe24.pjshop.vo.ProductVo;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestAppConfig.class,TestWebConfig.class})
@@ -201,13 +201,121 @@ public class AdminProductControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")));
 		
+		resultActions =
+		mockMvc
+		.perform(get("/api/admin/product/0")
+		.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.result", is("fail")));
+		
 //		String content = resultActions.andReturn().getResponse().getContentAsString();
 //		Gson gson = new Gson();
 //		JSONResult jsonResult = gson.fromJson(content, JSONResult.class);
 //		ProductVo productVo = (ProductVo) jsonResult.getData();
 //		System.out.println(productVo.getDeliverycost() + "!!!!!!!!!!!");
 
-		
+	
+	}
+	
+	@Test
+	public void testDModifyProductDetail() throws Exception{
+		ResultActions resultActions;
+	//1. 상품 업데이트 성공 case ==================================
+	//1.1 상품 상세에서 이미지와 옵션 및 상품정보를 바꿧을 때 성공 CASE==========		
+		ProductVo productVo1 = new ProductVo();
+		List<OptionVo> optionList = new ArrayList<OptionVo>();
+		List<ImageVo> imageList = new ArrayList<ImageVo>();
+		//상품 상세에서 옵션을 바꿧을경우 넘어오는 데이터
+		OptionVo optionVo1 = new OptionVo(4L,"검흰/280(수정)",2000,100,2L);
+		OptionVo optionVo2 = new OptionVo(5L,"검흰/285(수정)",2000,100,2L);	
+		optionList.add(optionVo1);
+		optionList.add(optionVo2);
+		//상품 상세에서 이미지를 바꿧을때 넘어오는 데이터
+		ImageVo imageVo1 = new ImageVo(3L,"201907211500(수정).jpg","/img","y",2L);
+		ImageVo imageVo2 = new ImageVo(4L,"201907211501(수정).jpg","/img","n",2L);
+		imageList.add(imageVo1);
+		imageList.add(imageVo2);
 
+		//상품 상세에서 상품정보를 수정하였을때 넘어오는 데이터
+		productVo1.setNo(2L);
+		productVo1.setName("아디다스 티셔츠 수정하기");
+		productVo1.setSimpleDescription("아디다스 제품입니다. 수정하기");
+		productVo1.setDescription("<div><span>아디다스 모라모라 수정했습니다.</span></div>");
+		productVo1.setManufacture("영국수정하기");
+		productVo1.setOptionList(optionList);
+		productVo1.setImageList(imageList);
+
+		resultActions =
+		mockMvc
+		.perform(put("/api/admin/product")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(productVo1)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
+	//1.2 상품 상세에서 상품정보만 바꿧을 때 성공 CASE==========	
+		ProductVo productVo2 = new ProductVo();
+		
+		productVo2.setNo(1L);
+		productVo2.setName("나이키 저스트두잇 수정하기");
+		productVo2.setSimpleDescription("나이키X양승준 콜라보 수정");
+		productVo2.setDescription("<div><span>나이키 모라모라 수정함</span></div>");
+		productVo2.setManufacture("한국수정하기");
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/admin/product")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(productVo2)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
+	
+	//2. 업데이트 실패 case===========
+		ProductVo productVo3 = new ProductVo();
+		
+		productVo3.setNo(5L);
+		
+		resultActions =
+		mockMvc
+		.perform(put("/api/admin/product")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(productVo3)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.result", is("fail")));
+	}
+	
+	@Test
+	public void testEDeleteProduct() throws Exception{
+		ResultActions resultActions;
+	//1. 상품 삭제 성공 case ==================================
+	//1.1 상품 상세에서 여러개를 체크후 삭제버튼을 클릭했을때==========		
+		List<Long> productNoList = new ArrayList<Long>();
+		Long long1 = 1L;
+		Long long2 = 2L;
+		
+		productNoList.add(long1);
+		productNoList.add(long2);
+		
+		resultActions =
+		mockMvc
+		.perform(delete("/api/admin/product")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(productNoList)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.result", is("success")));
 	}
 }

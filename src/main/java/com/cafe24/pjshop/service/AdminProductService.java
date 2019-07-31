@@ -57,12 +57,50 @@ public class AdminProductService {
 	}
 
 	public ProductVo getProductDetail(Long no) {
-		//if(productDao.countByNo(no)==0)
-		if(1==2)
+
+		if(productDao.countByNo(no)==0)
 			return null;
 		else {
 			return productDao.getProductDetail(no);
 		}
+	}
+
+	public int modifyProduct(ProductVo productVo) {
+
+		if(productDao.countByNo(productVo.getNo())==0)
+			return 400;
+		
+		if(productDao.modifyProduct(productVo)!=1)
+			return 0;
+		
+		// null로 비교하는 이유는 우선 Vo에 필드가 있는지없는지를 확인하기 위함.
+		// List가 있을수도있고 없을수도 있기때문에
+		if(productVo.getOptionList()!=null) {
+			List<OptionVo> OptionList = productVo.getOptionList();
+			
+			for(OptionVo OptionVo : OptionList) {
+				if(productDao.modifyOption(OptionVo)!=1)
+					return 0;
+			}
+		}
+		if(productVo.getImageList()!=null) {
+			List<ImageVo> imageList = productVo.getImageList();
+
+			for(ImageVo imageVo : imageList) {
+				if(productDao.modifyImage(imageVo)!=1)
+					return 0;
+			}
+		}
+		return 1;
+	}
+
+	public int deleteProduct(List<Long> productNoList) {
+		
+		if(!productNoList.isEmpty()) {
+			productDao.deleteProduct(productNoList);
+		}
+		
+		return 1;
 	}
 	
 

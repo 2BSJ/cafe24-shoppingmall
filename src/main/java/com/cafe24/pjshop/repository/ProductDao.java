@@ -46,6 +46,27 @@ public class ProductDao {
 		return sqlSession.selectOne("product.getProductVoByNo",no);
 	}
 
+// modify logic
+	public int modifyProduct(ProductVo productVo) {
+		return sqlSession.update("product.updateVo",productVo);
+	}
+	
+	public int modifyOption(OptionVo optionVo) {
+		return sqlSession.update("option.updateVo",optionVo);
+	}
+	
+	public int modifyImage(ImageVo imageVo) {
+		return sqlSession.update("image.updateVo",imageVo);
+	}
+
+//delete 지만 update로 상품상태를 n으로 바꿔준다
+	public int deleteProduct(List<Long> productNoList) {
+
+		return sqlSession.update("product.deleteVo",productNoList);
+	}
+	
+
+
 
 
 }

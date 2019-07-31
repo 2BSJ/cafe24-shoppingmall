@@ -15,6 +15,32 @@
 		]]>
 	</insert>
 	
+	<update id="updateVo" parameterType="imagevo">
+		<![CDATA[
+		UPDATE image
+		]]>
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="name != null">
+			<![CDATA[
+			name=#{name},
+			]]>
+		</if>
+		<if test="directory != null">
+			<![CDATA[
+			directory=#{directory},
+			]]>
+		</if>
+		<if test="titleStatus != null">
+			<![CDATA[
+			title_status=#{titleStatus}
+			]]>
+		</if>      
+		<![CDATA[
+		 WHERE no = #{no}      	 
+		]]>
+		</trim>
+	</update>
+	
 	
 
 

@@ -68,6 +68,11 @@ public class AdminProductController {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품목록 조회에 실패하였습니다"));
 	}
 	
+	/*
+	 * 
+	 *  getProductDetail 안에 countByNo 수정해야함.
+	 *  목록에서 관리자가 상품을 클릭했을때 상세 detail 정보 가져오는 컨트롤러
+	 */
 	@ApiOperation(value="관리자 상품 상세 정보 보기", notes ="관리자 상품 상세 정보 조회API")
 	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> getProductDetail(
@@ -81,4 +86,51 @@ public class AdminProductController {
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청으로 상품상세정보 조회에 실패하였습니다"));
 	}
+	
+	@ApiOperation(value="관리자 상품 상세정보 수정 하기", notes ="관리자 상품 상세 정보 수정API")
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modifyProduct(
+			@RequestBody ProductVo productVo) {
+		
+
+		int status = adminProductService.modifyProduct(productVo);
+		
+		if(status == 1)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		else if(status == 400)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청입니다."));
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품수정에 실패하였습니다"));
+	}
+	
+	/*
+	 * 
+	 * 관리자 상품 삭제의 경우 delete하는게 아니라
+	 * 컬럼에 status 상태코드를 두고 update로 상태코드를 바꿔주는게 훨씬 낫다.
+	 * 상품 뿐만 아니라 다른테이블들도 마찬가지.
+	 * on cascade로 참조하고있는 외래키 컬럼도 다 삭제해버리는건 굉장히 안좋은 방법.
+	 * List<Long>으로 mybatis mapper에서 받았을때 값을 빼는 방법은 
+	 * <foreach collection="list" item="item"  separator=";">
+	 * 되어있다면 item.value로 가져오면된다...
+	 * item.Long item.long등으로 헤맴
+	 */
+	@ApiOperation(value="관리자 상품 삭제", notes ="관리자 상품 삭제")
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	public ResponseEntity<JSONResult> deleteProduct(
+			@RequestBody List<Long> productNoList) {
+		
+
+		int status = adminProductService.deleteProduct(productNoList);
+		
+		if(status == 1)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		else if(status == 400)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청입니다."));
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품수정에 실패하였습니다"));
+	}
+	
+
+	
+	
 }

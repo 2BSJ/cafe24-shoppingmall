@@ -15,6 +15,31 @@
 		]]>
 	</insert>
 	
+	<update id="updateVo" parameterType="optionvo">
+		<![CDATA[
+		UPDATE option
+		]]>
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="value != null">
+			<![CDATA[
+			value=#{value},
+			]]>
+		</if>
+		<if test="price != 0">
+			<![CDATA[
+			price=#{price},
+			]]>
+		</if>
+		<if test="stock != 0">
+			<![CDATA[
+			stock=#{stock}
+			]]>
+		</if>      
+		<![CDATA[
+		 WHERE no = #{no}      	 
+		]]>
+		</trim>
+	</update>
 	
 
 
