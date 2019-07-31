@@ -70,7 +70,7 @@ public class AdminProductController {
 	
 	/*
 	 * 
-	 *  getProductDetail 안에 countByNo 수정해야함.
+	 *  getProductDetail 안에 countByNo 수정해야함.(해결)
 	 *  목록에서 관리자가 상품을 클릭했을때 상세 detail 정보 가져오는 컨트롤러
 	 */
 	@ApiOperation(value="관리자 상품 상세 정보 보기", notes ="관리자 상품 상세 정보 조회API")

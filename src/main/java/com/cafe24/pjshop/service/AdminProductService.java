@@ -53,7 +53,7 @@ public class AdminProductService {
 		map.put("categoryNo",categoryNo);
 		map.put("displayStatus",displayStatus);
 		map.put("salesStatus",salesStatus);
-		return productDao.getList(map);
+		return productDao.getListFromAdmin(map);
 	}
 
 	public ProductVo getProductDetail(Long no) {

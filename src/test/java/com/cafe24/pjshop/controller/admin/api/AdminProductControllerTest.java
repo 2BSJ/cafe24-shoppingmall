@@ -190,7 +190,7 @@ public class AdminProductControllerTest {
 	public void testCGetProductDetail() throws Exception{
 		ResultActions resultActions;
 	// 1. 성공 case==================================
-	//1.1 처음 관리자 상품목록 들어왔을때
+	//1.1  상품 상세정보 보기 물건 하나 클릭했을때
 		resultActions =
 		mockMvc
 		.perform(get("/api/admin/product/1")
@@ -200,7 +200,8 @@ public class AdminProductControllerTest {
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")));
-		
+	// 2. 실패 case ===================
+	// 2.1 잘못된 값이 넘어갔을 경우
 		resultActions =
 		mockMvc
 		.perform(get("/api/admin/product/0")

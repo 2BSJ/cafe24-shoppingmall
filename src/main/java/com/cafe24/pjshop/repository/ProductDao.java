@@ -26,8 +26,12 @@ public class ProductDao {
 		return sqlSession.insert("product.insertVo",productVo);
 	}
 	
-	public List<ProductVo> getList(Map<String,Object> map) {
-		return sqlSession.selectList("product.getListBySetting",map);
+	public List<ProductVo> getListFromAdmin(Map<String,Object> map) {
+		return sqlSession.selectList("product.getListBySettingFromAdmin",map);
+	}
+	
+	public List<ProductVo> getListFromUser(Map<String,Object> map) {
+		return sqlSession.selectList("product.getListBySettingFromUser",map);
 	}
 	
 	public int countByNo(Long no) {
