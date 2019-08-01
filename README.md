@@ -103,5 +103,5 @@
 ---
 
 ## Swagger API - localhost:8080/cafe24-shoppingmall/swagger-ui.html
-<img src='./Readme image/swagger.PNG'>  
+<img src='./Readme image/swagger.png'>  
 
