@@ -1,13 +1,20 @@
 package com.cafe24.pjshop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cafe24.pjshop.repository.CartDao;
+import com.cafe24.pjshop.vo.CartVo;
 
 @Service
 public class CartService {
 
-	public boolean order(Long optionNo) {
-		// TODO Auto-generated method stub
-		return false;
+	@Autowired
+	private CartDao cartDao;
+	
+	public int addProduct(CartVo cartVo) {
+
+		return cartDao.addProduct(cartVo);
 	}
 
 }

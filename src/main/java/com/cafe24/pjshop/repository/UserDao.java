@@ -1,5 +1,7 @@
 package com.cafe24.pjshop.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,9 @@ public class UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public List<UserVo> getAllVo(){
+		return sqlSession.selectList("user.getAllVo");
+	}
 	
 	public int countById(String id) {
 		return sqlSession.selectOne("user.countById",id);
@@ -36,6 +41,11 @@ public class UserDao {
 
 	public int findPassword(UserVo userVo) {
 		return sqlSession.selectOne("user.getPasswordByIdAndEmailAndPhone",userVo);
+	}
+
+	public int deleteUser(Long no) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("user.deleteByNo",no);
 	}
 
 

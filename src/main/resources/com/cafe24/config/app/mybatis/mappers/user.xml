@@ -9,6 +9,15 @@
 		 WHERE id = #{id}
 		]]>
 	</select>
+	
+	<select id="getAllVo" resultType="uservo">
+		<![CDATA[
+		SELECT no,name,id,reg_date as regDate,phone_number as phoneNumber,age,
+		gender,point,ordercount,role
+		
+		FROM user
+		]]>
+	</select>
 
 	<insert id="insertVo" parameterType="uservo">
 		<![CDATA[
@@ -94,6 +103,13 @@
 		   AND phone_number = #{phoneNumber}
 		]]>
 	</select>
+	
+	<delete id="deleteByNo" parameterType="long">
+		<![CDATA[
+		DELETE FROM user
+		WHERE no = #{no}
+		]]>
+	</delete>
 
 
 
