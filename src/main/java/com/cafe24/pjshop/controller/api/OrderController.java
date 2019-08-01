@@ -13,9 +13,9 @@ import com.cafe24.pjshop.vo.ProductVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RequestMapping("/api/order")
-@RestController("OrderAPIController")
-@Api(value = "OrderController", description ="주문 컨트롤러")
+//@RequestMapping("/api/order")
+//@RestController("OrderAPIController")
+//@Api(value = "OrderController", description ="주문 컨트롤러")
 public class OrderController {
 
 	@Autowired
