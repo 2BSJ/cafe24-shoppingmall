@@ -87,6 +87,17 @@ INSERT
 			   '/img',
 			   'n',
 			   1);
+			   
+/* cart 데이터 */
+			   
+INSERT
+	INTO cart
+		VALUES(null,
+			   3,
+			   0,
+			   1,
+			   1
+			   )
 	
 			   
 								

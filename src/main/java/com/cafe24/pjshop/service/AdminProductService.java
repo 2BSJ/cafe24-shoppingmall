@@ -96,11 +96,15 @@ public class AdminProductService {
 
 	public int deleteProduct(List<Long> productNoList) {
 		
-		if(!productNoList.isEmpty()) {
+		if(productNoList.isEmpty()) {
+			return 400;
+		}
+		else {
 			productDao.deleteProduct(productNoList);
+			return 1;
 		}
 		
-		return 1;
+		
 	}
 	
 

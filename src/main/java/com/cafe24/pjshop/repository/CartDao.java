@@ -1,5 +1,7 @@
 package com.cafe24.pjshop.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,17 @@ public class CartDao {
 	private SqlSession sqlSession;
 	public int addProduct(CartVo cartVo) {
 		return sqlSession.insert("cart.insertVo",cartVo);
+	}
+	public List<CartVo> getList(Long userNo) {
+		return sqlSession.selectList("cart.getVoByUserNo",userNo);
+	}
+	public int deleteProduct(List<Long> productNoList) {
+		return sqlSession.delete("cart.deleteVo",productNoList);
+		
+	}
+	public int modifyProduct(List<CartVo> cartList) {
+
+		return sqlSession.update("cart.modifyVo",cartList);
 	}
 
 }

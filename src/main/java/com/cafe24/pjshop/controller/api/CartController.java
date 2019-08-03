@@ -1,5 +1,7 @@
 package com.cafe24.pjshop.controller.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,12 +45,51 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("장바구니에 상품추가를 실패했습니다."));
 	}
 	
-	//주문 내역
-	@ApiOperation(value="장바구니 리스트 불러오기", notes ="장바구니 리스트 불러오기")
+	//장바구니 리스트 불러오기
+	@ApiOperation(value="장바구니 리스트 불러오기", notes ="장바구니 리스트 불러오기 API")
 	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
-	public ResponseEntity<JSONResult> getList(
-			@PathVariable(value="no") Long userNo) {	
-			
-			return null;
+	public ResponseEntity<JSONResult> getCartList(
+			@PathVariable(value="no") Long userNo) {
+		
+		List<CartVo> cartList = cartService.getList(userNo);
+		
+		if(cartList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
 		}
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
+		
+	}
+	
+	@ApiOperation(value="장바구니 상품 수량수정", notes ="장바구니 상품 수량 수정 API")
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modifyCart(
+			@RequestBody List<CartVo> cartList) {
+		
+
+		int status = cartService.modifyCart(cartList);
+		if(status == 1)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		else if(status == 400)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청입니다."));
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품수량수정에 실패하였습니다"));
+	}
+	
+	@ApiOperation(value="장바구니 상품 삭제", notes ="장바구니 상품 삭제 API")
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	public ResponseEntity<JSONResult> deleteCart(
+			@RequestBody List<Long> productNoList) {
+		
+
+		int status = cartService.deleteProduct(productNoList);
+		if(status == 1)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		else if(status == 400)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청입니다."));
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품삭제에 실패하였습니다"));
+	}
+	
+
 }
