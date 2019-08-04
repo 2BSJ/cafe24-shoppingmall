@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+
+	<insert id="insertVo" parameterType='orderVo'>
+		
+		<![CDATA[
+		INSERT
+		INTO order_t
+		VALUES(null,
+			   #{csStatus},
+			   #{payStatus},
+			   #{orderStatus},
+			   AES_ENCRYPT(#{address},SHA2(#{key},512)),
+			   AES_ENCRYPT(#{homeNumber},SHA2(#{key},512)),
+			   AES_ENCRYPT(#{phoneNumber},SHA2(#{key},512)),
+			   #{message},
+			   #{memberStatus},
+			   SHA2(#{password},512),
+			   now(),
+			   #{memberNo}
+			   )
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+		        SELECT LAST_INSERT_ID()
+			]]>
+	    </selectKey>		
+	</insert>
+	
+	<insert id="insertDetailVo" parameterType='orderVo'>
+		<foreach collection="cartList" item="item"  separator=";">
+			<![CDATA[
+			INSERT
+			INTO order_detail
+			VALUES(null,
+				   #{no},
+				   #{item.optionNo}
+				   )
+			]]>	
+		</foreach>
+	</insert>
+	
+	<select id="getVoByUserNo" parameterType='long' resultType="ordervo">
+		SELECT no,cs_status,pay_status,order_status,
+		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
+		convert(AES_DECRYPT(home_number, SHA2('cafe', 512)) using utf8) as homeNumber,
+		convert(AES_DECRYPT(phone_number, SHA2('cafe', 512)) using utf8) as phoneNumber,
+		message,member_status,reg_date
+		FROM order_t
+		WHERE member_no = #{userNo}
+		
+	</select>
+	
+	<select id="getVoByOrderNo" parameterType='long' resultType="ordervo">
+		SELECT no,cs_status,pay_status,order_status,
+		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
+		convert(AES_DECRYPT(home_number, SHA2('cafe', 512)) using utf8) as homeNumber,
+		convert(AES_DECRYPT(phone_number, SHA2('cafe', 512)) using utf8) as phoneNumber,
+		message,member_status,reg_date
+		FROM order_t
+		WHERE no = #{orderNo}	
+	</select>
+	
+	<update id="modifyVo" parameterType="ordervo">
+		<![CDATA[
+		UPDATE order_t
+		]]>
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="csStatus != null">
+			<![CDATA[
+			cs_status=#{csStatus}
+			]]>
+		</if>
+		<if test="payStatus != null">
+			<![CDATA[
+			pay_status=#{payStatus}
+			]]>
+		</if>
+		<if test="orderStatus != null">
+			<![CDATA[
+			order_status=#{orderStatus}
+			]]>
+		</if>
+		<if test="address != null">
+			<![CDATA[
+			address=AES_ENCRYPT(#{address},SHA2(#{key},512)),
+			]]>
+		</if>
+		<if test="homeNumber != null">
+			<![CDATA[
+			homeNumber=AES_ENCRYPT(#{homeNumber},SHA2(#{key},512)),
+			]]>
+		</if>
+		<if test="phoneNumber != null">
+			<![CDATA[
+			phoneNumber=AES_ENCRYPT(#{phoneNumber},SHA2(#{key},512)),
+			]]>
+		</if>		
+		<if test="message != null">
+			<![CDATA[
+			message=#{message}
+			]]>
+		</if>
+		<![CDATA[
+		 WHERE no = #{no}      	 
+		]]>
+		</trim>
+	</update>
+	
+		<select id="getVoByOption" parameterType="map" resultType="ordervo">
+		<![CDATA[
+		SELECT no,cs_status,pay_status,order_status,
+		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
+		convert(AES_DECRYPT(home_number, SHA2('cafe', 512)) using utf8) as homeNumber,
+		convert(AES_DECRYPT(phone_number, SHA2('cafe', 512)) using utf8) as phoneNumber,
+		message,member_status,reg_date
+		FROM order_t
+		]]>
+		<where>
+			<if test="memberNo != 0">
+				<![CDATA[
+				 member_no = memberNo
+				]]>
+			</if>
+			<if test="csStatus != null">
+				<![CDATA[
+				and cs_status = #{csStatus}
+				]]>
+			</if>
+			<if test="payStatus != null">
+				<![CDATA[
+				and pay_status = #{payStatus}
+				]]>
+			</if>
+			<if test="orderStatus != null">
+				<![CDATA[
+				and order_status = #{orderStatus}
+				]]>
+			</if>
+		</where>
+	</select>
+</mapper>

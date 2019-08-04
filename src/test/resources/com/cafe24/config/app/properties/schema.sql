@@ -15,8 +15,8 @@ ALTER TABLE `cart`
 	DROP FOREIGN KEY `FK_user_TO_cart`; -- 회원 -> 장바구니(담긴상품정보)
 
 -- 주문
-ALTER TABLE `order`
-	DROP FOREIGN KEY `FK_user_TO_order`; -- 회원 -> 주문
+ALTER TABLE `order_t`
+	DROP FOREIGN KEY `FK_user_TO_order_t`; -- 회원 -> 주문
 
 -- 쿠폰
 ALTER TABLE `coupon`
@@ -32,7 +32,7 @@ ALTER TABLE `review`
 
 -- 결제
 ALTER TABLE `payment`
-	DROP FOREIGN KEY `FK_order_TO_payment`; -- 주문 -> 결제
+	DROP FOREIGN KEY `FK_order_t_TO_payment`; -- 주문 -> 결제
 
 -- 상품이미지
 ALTER TABLE `image`
@@ -44,7 +44,7 @@ ALTER TABLE `customer_agreement`
 
 -- 주문상세
 ALTER TABLE `order_detail`
-	DROP FOREIGN KEY `FK_order_TO_order_detail`; -- 주문 -> 주문상세
+	DROP FOREIGN KEY `FK_order_t_TO_order_detail`; -- 주문 -> 주문상세
 
 -- 주문상세
 ALTER TABLE `order_detail`
@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `option` RESTRICT;
 DROP TABLE IF EXISTS `cart` RESTRICT;
 
 -- 주문
-DROP TABLE IF EXISTS `order` RESTRICT;
+DROP TABLE IF EXISTS `order_t` RESTRICT;
 
 -- 쿠폰
 DROP TABLE IF EXISTS `coupon` RESTRICT;
@@ -190,28 +190,30 @@ ALTER TABLE `cart`
 	MODIFY COLUMN `no` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '장바구니번호';
 
 -- 주문
-CREATE TABLE `order` (
+CREATE TABLE `order_t` (
 	`no`            INT UNSIGNED   NOT NULL COMMENT '주문번호', -- 주문번호
 	`cs_status`     VARCHAR(20)    NOT NULL COMMENT 'CS주문상태(교환,반품 등)', -- CS주문상태(교환,반품 등)
-	`order_status`  VARCHAR(20)    NOT NULL COMMENT '입금/결제 상태', -- 입금/결제 상태
+	`pay_status`    VARCHAR(20)    NOT NULL COMMENT '입금/결제 상태', -- 입금/결제 상태
+	`order_status`  VARCHAR(20)    NOT NULL COMMENT '주문상태', -- 주문상태
 	`address`       VARBINARY(200) NOT NULL COMMENT '배송주소', -- 배송주소
 	`home_number`   VARBINARY(200) NULL     COMMENT '연락번호(집전화)', -- 연락번호(집전화)
 	`phone_number`  VARBINARY(200) NOT NULL COMMENT '연락번호(핸드폰)', -- 연락번호(핸드폰)
 	`message`       VARCHAR(100)   NULL     COMMENT '배송메세지', -- 배송메세지
 	`member_status` VARCHAR(20)    NOT NULL COMMENT '회원구분(회원,비회원)', -- 회원구분(회원,비회원)
 	`password`      VARBINARY(200) NULL     COMMENT '주문조회비밀번호', -- 주문조회비밀번호
+	`reg_date`      DATETIME       NOT NULL COMMENT '등록일', -- 등록일
 	`member_no`     INT UNSIGNED   NULL     COMMENT '회원번호' -- 회원번호
 )
 COMMENT '주문';
 
 -- 주문
-ALTER TABLE `order`
-	ADD CONSTRAINT `PK_order` -- 주문 기본키
+ALTER TABLE `order_t`
+	ADD CONSTRAINT `PK_order_t` -- 주문 기본키
 		PRIMARY KEY (
 			`no` -- 주문번호
 		);
 
-ALTER TABLE `order`
+ALTER TABLE `order_t`
 	MODIFY COLUMN `no` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '주문번호';
 
 -- 쿠폰
@@ -336,8 +338,6 @@ ALTER TABLE `customer_agreement`
 -- 주문상세
 CREATE TABLE `order_detail` (
 	`no`        INT UNSIGNED NOT NULL COMMENT '주문상세번호', -- 주문상세번호
-	`name`      VARCHAR(100) NOT NULL COMMENT '(기록용)상품명', -- (기록용)상품명
-	`price`     INT UNSIGNED NOT NULL COMMENT '(기록용)가격', -- (기록용)가격
 	`order_no`  INT UNSIGNED NOT NULL COMMENT '주문번호', -- 주문번호
 	`option_no` INT UNSIGNED NOT NULL COMMENT '옵션번호' -- 옵션번호
 )
@@ -409,8 +409,8 @@ ALTER TABLE `cart`
 		);
 
 -- 주문
-ALTER TABLE `order`
-	ADD CONSTRAINT `FK_user_TO_order` -- 회원 -> 주문
+ALTER TABLE `order_t`
+	ADD CONSTRAINT `FK_user_TO_order_t` -- 회원 -> 주문
 		FOREIGN KEY (
 			`member_no` -- 회원번호
 		)
@@ -450,11 +450,11 @@ ALTER TABLE `review`
 
 -- 결제
 ALTER TABLE `payment`
-	ADD CONSTRAINT `FK_order_TO_payment` -- 주문 -> 결제
+	ADD CONSTRAINT `FK_order_t_TO_payment` -- 주문 -> 결제
 		FOREIGN KEY (
 			`order_no` -- 주문번호
 		)
-		REFERENCES `order` ( -- 주문
+		REFERENCES `order_t` ( -- 주문
 			`no` -- 주문번호
 		);
 
@@ -480,11 +480,11 @@ ALTER TABLE `customer_agreement`
 
 -- 주문상세
 ALTER TABLE `order_detail`
-	ADD CONSTRAINT `FK_order_TO_order_detail` -- 주문 -> 주문상세
+	ADD CONSTRAINT `FK_order_t_TO_order_detail` -- 주문 -> 주문상세
 		FOREIGN KEY (
 			`order_no` -- 주문번호
 		)
-		REFERENCES `order` ( -- 주문
+		REFERENCES `order_t` ( -- 주문
 			`no` -- 주문번호
 		);
 

@@ -1,4 +1,4 @@
-package com.cafe24.pjshop.controller.api;
+package com.cafe24.pjshop.controller.admin.api;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +41,7 @@ import com.google.gson.Gson;
 @ContextConfiguration(classes = {TestAppConfig.class,TestWebConfig.class})
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class OrderControllerTest {
+public class AdminOrderControllerTest {
 
 	private MockMvc mockMvc;
 	
@@ -59,58 +59,28 @@ public class OrderControllerTest {
 
 	//회원이 주문했을떄 test
 	@Test
-	public void testAAddOrder() throws Exception{
+	public void testAGetListByOption() throws Exception{
 		
 		ResultActions resultActions;
 	// 1. 회원이 상품을 주문했을때 성공 case
 	// 1.1 정상적 성공 case
-		List<CartVo> cartList = new ArrayList<CartVo>();
-		CartVo cartVo1 = new CartVo();
-		cartVo1.setNo(1L);
-		cartVo1.setAmount(2);
-		cartVo1.setOptionNo(1L);
-		cartVo1.setMemberNo(1L);
-		cartList.add(cartVo1);
-		
-		OrderVo orderVo = new OrderVo();
-		orderVo.setCsStatus("b");
-		orderVo.setPayStatus("t");
-		orderVo.setOrderStatus("b");
-		orderVo.setAddress("평내");
-		orderVo.setPhoneNumber("010-9136-4365");
-		orderVo.setMessage("경비실에 놔주세영");
-		orderVo.setMemberStatus("t");
-		orderVo.setMemberNo(1L);
-		
-		//orderVo.setHomeNumber("0");
-		//orderVo.setPassword("1234");
-		orderVo.setCartList(cartList);
-		
 		
 		resultActions = 
 		mockMvc
-		.perform(post("/api/order")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(new Gson().toJson(orderVo)));
+		.perform(get("/api/admin/order")
+		.param("csStatus", "b")
+		.param("orderStatus", "b")
+		.param("payStatus", "t")
+		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("success")));
-	
-	}
-	
-	//회원이 주문한 전체내역
-	@Test
-	public void testBGetList() throws Exception{
 		
-		ResultActions resultActions;
-	// 1. 회원이 주문목록을 봤을때 성공 case
-	// 1.1 정상적 성공 case
 		resultActions = 
 		mockMvc
-		.perform(get("/api/order")
-		.param("userNo", "1")
+		.perform(get("/api/admin/order")
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
@@ -119,17 +89,18 @@ public class OrderControllerTest {
 		.andExpect(jsonPath("$.result", is("success")));
 	
 	}
+
 	
-	//회원이 주문한 상세내역
+	// 주문한 상세내역 보기
 	@Test
-	public void testCGetVo() throws Exception{
+	public void testBGetVo() throws Exception{
 		
 		ResultActions resultActions;
 	// 1. 회원이 주문목록을 봤을때 성공 case
 	// 1.1 정상적 성공 case
 		resultActions = 
 		mockMvc
-		.perform(get("/api/order/1")
+		.perform(get("/api/admin/order/1")
 		.contentType(MediaType.APPLICATION_JSON));
 		
 		resultActions
@@ -139,18 +110,18 @@ public class OrderControllerTest {
 	}
 	
 	@Test
-	public void testDModifyVo() throws Exception{
+	public void testCModifyVo() throws Exception{
 		
 		ResultActions resultActions;
-	// 1. 회원이 주문중에 주소나 message를 수정했을때 case
+	// 1. 회원의 주문중 입금을 확인해서 배송을 보냈을때 case 
 	// 1.1 정상적 성공 case
 		OrderVo orderVo1 = new OrderVo();
 		orderVo1.setNo(1L);
-		orderVo1.setMessage("집앞이었다가 다른데로 수정해주세요");
+		orderVo1.setOrderStatus("p");
 		
 		resultActions = 
 		mockMvc
-		.perform(put("/api/order")
+		.perform(put("/api/admin/order")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(new Gson().toJson(orderVo1)));
 		

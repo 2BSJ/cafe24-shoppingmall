@@ -41,6 +41,15 @@
 		</trim>
 	</update>
 	
+	<update id="reduceStock" parameterType="orderVo">
+		<foreach collection="cartList" item="item"  separator=";">
+				<![CDATA[
+				UPDATE option
+				SET stock = stock - #{item.amount} 
+				WHERE no = #{item.optionNo}
+				]]>	
+		</foreach>
+	</update>
 
 
 	

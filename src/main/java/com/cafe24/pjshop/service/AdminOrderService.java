@@ -1,5 +1,6 @@
 package com.cafe24.pjshop.service;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,31 +12,10 @@ import com.cafe24.pjshop.repository.OrderDao;
 import com.cafe24.pjshop.vo.OrderVo;
 
 @Service
-public class OrderService {
+public class AdminOrderService {
 	
 	@Autowired
 	private OrderDao orderDao;
-	
-	public int addOrder(OrderVo orderVo) {
-		
-		int status = orderDao.addOrder(orderVo);
-		if(status != 1) {
-			return 400;
-			}
-		else {
-			orderDao.reduceStock(orderVo);
-			return orderDao.addOrderDetail(orderVo);
-		}
-		
-	}
-
-	public List<OrderVo> getList(Long userNo) {
-		List<OrderVo> orderList = orderDao.getList(userNo);
-		for(OrderVo orderVo: orderList) {
-			orderVo.setKey(null);
-		}
-		return orderList;
-	}
 
 	public OrderVo getDetailList(Long orderNo) {
 		return orderDao.getDetailList(orderNo);
@@ -44,6 +24,17 @@ public class OrderService {
 	public int modifyOrder(OrderVo orderVo) {
 
 		return orderDao.modifyOrder(orderVo);
+	}
+
+	public List<OrderVo> getAdminOrderList(Long memberNo, String csStatus, String payStatus, String orderStatus,
+			String memberStatus) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("memberNo", memberNo);
+		map.put("csStatus", csStatus);
+		map.put("payStatus", payStatus);
+		map.put("orderStatus",orderStatus);
+		
+		return orderDao.getAdminOrderList(map);
 	}
 
 }

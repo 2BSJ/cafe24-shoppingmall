@@ -97,7 +97,22 @@ INSERT
 			   0,
 			   1,
 			   1
-			   )
-	
-			   
+			   );
+
+/* 주문 데이터 */
+INSERT
+	INTO order_t
+		VALUES(null,
+			   'b',
+			   't',
+			   'b',
+			   AES_ENCRYPT('호평',SHA2('cafe',512)),
+			   AES_ENCRYPT('031-511-0365',SHA2('cafe',512)),
+			   AES_ENCRYPT('010-9136-4365',SHA2('cafe',512)),
+			   '경비실에 맡겨요',
+			   't',
+			   SHA2('0',512),
+			   now(),
+			   1
+			   );		   
 								
