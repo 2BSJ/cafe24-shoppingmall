@@ -18,6 +18,10 @@ public class ProductDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public int countCategoryNoInProductVo(Long categoryNo) {
+		return sqlSession.selectOne("product.countCategoryNoInProductVo",categoryNo);
+	}
+	
 	public int checkInvalidCategoryNo(Long categoryNo) {
 		return sqlSession.selectOne("category.countByNo",categoryNo);
 	}

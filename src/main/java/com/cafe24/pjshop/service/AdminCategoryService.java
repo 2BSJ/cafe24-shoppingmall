@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.pjshop.repository.CategoryDao;
+import com.cafe24.pjshop.repository.ProductDao;
 import com.cafe24.pjshop.vo.CategoryVo;
 
 @Service
@@ -14,6 +15,9 @@ public class AdminCategoryService {
 	
 	@Autowired
 	private CategoryDao categoryDao;
+	
+	@Autowired
+	private ProductDao productDao;
 	
 	public int addCategory(CategoryVo categoryVo) {
 		// TODO Auto-generated method stub
@@ -38,8 +42,11 @@ public class AdminCategoryService {
 	}
 
 	public int deleteCategory(CategoryVo categoryVo) {
-		// TODO Auto-generated method stub
-		return categoryDao.deleteCategory(categoryVo);
+		int status = productDao.countCategoryNoInProductVo(categoryVo.getNo());
+		if(status>=1)
+			return 400;
+		else			
+			return categoryDao.deleteCategory(categoryVo);
 	}
 
 }

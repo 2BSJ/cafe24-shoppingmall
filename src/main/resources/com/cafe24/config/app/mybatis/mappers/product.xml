@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product">
 
+
+	<select id ="countCategoryNoInProductVo" parameterType="long" resultType="int">
+		SELECT count(*)
+		FROM product
+		WHERE category_no = #{categoryNo}
+	</select>
 	<insert id="insertVo" parameterType='productvo'>
 		<![CDATA[
 		INSERT

@@ -138,12 +138,11 @@ public class AdminCategoryController {
 		}
 		int result = adminCategoryService.deleteCategory(categoryVo);
 		
-		if(result >= 1){
-				
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
+		if(result == 400){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("카테고리에 상품이 포함되어있습니다."));	
 		}
 		else
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("Delete 실패!"));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 	}
 		
 

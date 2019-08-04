@@ -227,7 +227,7 @@ public class UserControllerTest {
 		
 		resultActions
 		.andDo(print())
-		.andExpect(status().isBadRequest())
+		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.result", is("fail")));
 		
 	}

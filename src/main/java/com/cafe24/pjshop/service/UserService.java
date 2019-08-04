@@ -43,19 +43,6 @@ public class UserService {
 		return userDao.findPassword(userVo);
 	}
 
-	public boolean addcart(Long no) {
-		// sqlSession.selectOne("
-		// sqlSession.selectOne("user.checkreply",no);
-		return true;
-	}
-	
-	
-
-	public boolean deletecart(Long no) {
-
-		return true;
-	}
-
 
 
 

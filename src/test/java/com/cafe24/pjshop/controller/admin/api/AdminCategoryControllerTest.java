@@ -175,28 +175,9 @@ public class AdminCategoryControllerTest {
 	@Test
 	public void testEDeleteCategory() throws Exception{
 		ResultActions resultActions;	
-		CategoryVo categoryVo1 = new CategoryVo();	
 		//1. delete 성공 case ==================================
-		//1.1 최상위카테고리인 옷 삭제했을때
-		categoryVo1.setNo(1L);
-		categoryVo1.setName("옷");
-		categoryVo1.setDepth(1);
-		categoryVo1.setGroupNo(1);
-		
-		resultActions =
-		mockMvc
-		.perform(delete("/api/admin/category")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(new Gson().toJson(categoryVo1)));
-		
-		resultActions
-		.andDo(print())
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data", is(true)));
-		
 
-		//1.2 최상위 카테고리인 신발 삭제했을때 -- 하위 카테고리인 샌달도 같이 삭제============
+		//1.1 최상위 카테고리인 신발 삭제했을때 -- 하위 카테고리인 샌달도 같이 삭제============
 		CategoryVo categoryVo2 = new CategoryVo();	
 		categoryVo2.setNo(2L);
 		categoryVo2.setName("신발");
@@ -233,10 +214,30 @@ public class AdminCategoryControllerTest {
 		resultActions
 		.andDo(print())
 		.andExpect(status().isBadRequest())
-		.andExpect(jsonPath("$.result", is("fail")));		
+		.andExpect(jsonPath("$.result", is("fail")));
+		
+		
+		
+		//2.1 카테고리를 참조하고 있는 상품이있을때 삭제했을때
+		CategoryVo categoryVo1 = new CategoryVo();
+		categoryVo1.setNo(1L);
+		categoryVo1.setName("옷");
+		categoryVo1.setDepth(1);
+		categoryVo1.setGroupNo(1);
+		
+		resultActions =
+		mockMvc
+		.perform(delete("/api/admin/category")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(new Gson().toJson(categoryVo1)));
+		
+		resultActions
+		.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.result", is("fail")));
 	}	
 	
-	//카테고리가 없을때 getList
+	//카테고리가 하나 남았을때 getList
 	@Test
 	public void testFGetListAfterAllCategoryDelete() throws Exception{
 		ResultActions resultActions;		
@@ -249,7 +250,7 @@ public class AdminCategoryControllerTest {
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("fail")));
+		.andExpect(jsonPath("$.result", is("success")));
 		
 		testCAddCategory();
 		

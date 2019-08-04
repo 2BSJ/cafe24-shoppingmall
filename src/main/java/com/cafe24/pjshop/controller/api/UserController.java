@@ -99,7 +99,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(authUserVo));
 		}
 		else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("login실패!"));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("login실패!"));
 		}
 		
 	}
