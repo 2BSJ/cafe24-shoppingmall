@@ -103,7 +103,8 @@ CREATE TABLE `user` (
 	`gender`       varchar(20)                    NOT NULL COMMENT '성별', -- 성별
 	`point`        INT UNSIGNED                   NULL     COMMENT '적립금', -- 적립금
 	`ordercount`   INT UNSIGNED                   NULL     COMMENT '주문횟수', -- 주문횟수
-	`role`         enum('ROLE_USER','ROLE_ADMIN') NOT NULL DEFAULT 'ROLE_USER' COMMENT '권한' -- 권한
+	`role`         enum('ROLE_USER','ROLE_ADMIN') NOT NULL DEFAULT 'ROLE_USER' COMMENT '권한', -- 권한
+	`user_status`  enum('y','n')                  NOT NULL DEFAULT 'y' COMMENT '상태' -- 상태
 )
 COMMENT '회원';
 

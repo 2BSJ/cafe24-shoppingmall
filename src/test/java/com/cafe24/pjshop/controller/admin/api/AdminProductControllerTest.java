@@ -169,8 +169,7 @@ public class AdminProductControllerTest {
 		resultActions
 		.andDo(print())
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data[0].salesStatus",is("n")));
+		.andExpect(jsonPath("$.result", is("fail")));
 	//2. 상품목록 조회 실패 case==================
 	//2.1 데이터가 없을경우
 		resultActions =

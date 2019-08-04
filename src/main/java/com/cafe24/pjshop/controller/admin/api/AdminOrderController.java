@@ -39,7 +39,7 @@ public class AdminOrderController {
 
 	
 	//주문 내역
-	@ApiOperation(value="상품 주문 내역", notes ="상품 주문 내역API")
+	@ApiOperation(value="주문 목록 내역", notes ="주문 목록 내역API")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> getAdminOrderList(
 			@RequestParam(required=false, defaultValue="0") Long memberNo,
@@ -72,7 +72,6 @@ public class AdminOrderController {
 				
 	}
 	
-	//환불 및 배송메시지만 수정가능
 	//반품은 상품이오고나서 다시 회사로보내면 회사에서 관리자로 수정
 	@ApiOperation(value="상품 주문 수정하기", notes ="상품 주문 수정하기 API")
 	@RequestMapping(value = "", method = RequestMethod.PUT)

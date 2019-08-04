@@ -45,7 +45,7 @@ public class UserDao {
 
 	public int deleteUser(Long no) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("user.deleteByNo",no);
+		return sqlSession.update("user.deleteByNo",no);
 	}
 
 

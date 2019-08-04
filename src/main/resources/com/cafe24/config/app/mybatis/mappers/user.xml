@@ -104,12 +104,13 @@
 		]]>
 	</select>
 	
-	<delete id="deleteByNo" parameterType="long">
+	<update id="deleteByNo" parameterType="long">
 		<![CDATA[
-		DELETE FROM user
+		UPDATE user
+		SET user_status='n'
 		WHERE no = #{no}
 		]]>
-	</delete>
+	</update>
 
 
 

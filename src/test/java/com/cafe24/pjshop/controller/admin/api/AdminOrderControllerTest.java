@@ -57,12 +57,10 @@ public class AdminOrderControllerTest {
 		//테스트 데이터베이스의 테이블들 초기화시켜주고 값 세팅시키기.
 	}
 
-	//회원이 주문했을떄 test
 	@Test
 	public void testAGetListByOption() throws Exception{
 		
 		ResultActions resultActions;
-	// 1. 회원이 상품을 주문했을때 성공 case
 	// 1.1 정상적 성공 case
 		
 		resultActions = 

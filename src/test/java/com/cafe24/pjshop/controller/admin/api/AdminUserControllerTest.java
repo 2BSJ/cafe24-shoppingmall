@@ -58,7 +58,6 @@ public class AdminUserControllerTest {
 	public void testAGetUserList() throws Exception{
 		
 		ResultActions resultActions;
-		//=====================아이디가 중복체크 된 case==================
 		
 		resultActions = 
 		mockMvc
@@ -75,7 +74,6 @@ public class AdminUserControllerTest {
 	public void testBDeleteUser() throws Exception{
 		
 		ResultActions resultActions;
-		//=====================아이디가 중복체크 된 case==================
 		
 		resultActions = 
 		mockMvc
