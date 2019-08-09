@@ -56,7 +56,7 @@ public class UserController {
 		
 		if (validatorResults.isEmpty() == false) {
 			for (ConstraintViolation<UserVo> validatorResult : validatorResults) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(validatorResult.getMessage()));
+				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(validatorResult.getMessage()));
 			}
 		}
 		int countId = userService.checkId(id);

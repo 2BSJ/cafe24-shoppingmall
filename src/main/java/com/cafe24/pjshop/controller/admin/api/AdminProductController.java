@@ -115,12 +115,12 @@ public class AdminProductController {
 	 * item.Long item.long등으로 헤맴
 	 */
 	@ApiOperation(value="관리자 상품 삭제", notes ="관리자 상품 삭제")
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteProduct(
-			@RequestBody List<Long> productNoList) {
+			@PathVariable(value="no") Long no) {
 		
 
-		int status = adminProductService.deleteProduct(productNoList);
+		int status = adminProductService.deleteProduct(no);
 		
 		if(status == 1)
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));

@@ -69,7 +69,7 @@ public class ProductControllerTest {
 		optionList.add(optionVo1);
 		optionList.add(optionVo2);
 		
-		ImageVo imageVo1 = new ImageVo(null,"201907211500.jpg","/img","y",null);
+		ImageVo imageVo1 = new ImageVo(null,"adidas.jpg","/img","y",null);
 		ImageVo imageVo2 = new ImageVo(null,"201907211501.jpg","/img","n",null);
 		
 		imageList.add(imageVo1);

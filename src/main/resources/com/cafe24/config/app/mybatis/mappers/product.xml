@@ -48,66 +48,70 @@
 	
 	<select id="getListBySettingFromAdmin" parameterType="map" resultType="productvo">
 		<![CDATA[
-		SELECT *
-		FROM product
+		SELECT p.*,i.name as titleImageName
+		FROM product p,image i
 		]]>
 		<where>
 			<if test="name != null">
 				<![CDATA[
-				 name LIKE concat('%',#{name},'%')
+				 p.name LIKE concat('%',#{name},'%')
 				]]>
 			</if>
 			<if test="categoryNo != 0">
 				<![CDATA[
-				and category_no = #{categoryNo}
+				and p.category_no = #{categoryNo}
 				]]>
 			</if>
 			<if test="displayStatus != null">
 				<![CDATA[
-				and display_status = #{displayStatus}
+				and p.display_status = #{displayStatus}
 				]]>
 			</if>
 			<if test="salesStatus != null">
 				<![CDATA[
-				and sales_status = #{salesStatus}
+				and p.sales_status = #{salesStatus}
 				]]>
 			</if>
 				<![CDATA[
-				and product_status ='y'
+				and p.product_status ='y'
+				and p.no = i.product_no
+				and i.title_status='y'
 				]]>
 		</where>
 	</select>
 	
 	<select id="getListBySettingFromUser" parameterType="map" resultType="productvo">
 		<![CDATA[
-		SELECT *
-		FROM product
+		SELECT p.*,i.name as titleImageName
+		FROM product p,image i
 		]]>
 		<where>
 			<if test="name != null">
 				<![CDATA[
-				 name LIKE concat('%',#{name},'%')
+				 p.name LIKE concat('%',#{name},'%')
 				]]>
 			</if>
 			<if test="categoryNo != 0">
 				<![CDATA[
-				and category_no = #{categoryNo}
+				and p.category_no = #{categoryNo}
 				]]>
 			</if>
 			<if test="specialStatus != null">
 				<![CDATA[
-				and special_status = #{specialStatus}
+				and p.special_status = #{specialStatus}
 				]]>
 			</if>
 			<if test="titleStatus != null">
 				<![CDATA[
-				and title_status = #{titleStatus}
+				and p.title_status = #{titleStatus}
 				]]>
 			</if>
 				<![CDATA[
-				and product_status ='y'
-				and display_status ='y'
-				and sales_status ='y'
+				and p.product_status ='y'
+				and p.display_status ='y'
+				and p.sales_status ='y'
+				and p.no = i.product_no
+				and i.title_status='y'
 				]]>
 		</where>
 	</select>
@@ -217,14 +221,14 @@
 	</update>
 	
 	<!-- delete의 경우 delete가 아니라 update로 상품 스테이터스 값을 n으로 바꾸어 주어서 삭제된것처럼 처리하고 실제 데이터는 남겨둔다. -->
-	<update id="deleteVo" parameterType="java.util.List">
-		<foreach collection="list" item="item"  separator=";">
+	<update id="deleteVo" parameterType="long">
+		
 		     <![CDATA[
 					UPDATE product 
 					SET product_status = 'n' 
-					WHERE no = #{item.value} 	
+					WHERE no = #{no} 	
 		     ]]>
-   		</foreach>
+   		
 	</update>
 	
 					<!-- result Map -->

@@ -94,16 +94,10 @@ public class AdminProductService {
 		return 1;
 	}
 
-	public int deleteProduct(List<Long> productNoList) {
+	public int deleteProduct(Long no) {
 		
-		if(productNoList.isEmpty()) {
-			return 400;
-		}
-		else {
-			productDao.deleteProduct(productNoList);
+			productDao.deleteProduct(no);
 			return 1;
-		}
-		
 		
 	}
 	

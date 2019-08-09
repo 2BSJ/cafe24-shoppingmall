@@ -68,9 +68,9 @@ public class ProductDao {
 	}
 
 //delete 지만 update로 상품상태를 n으로 바꿔준다
-	public int deleteProduct(List<Long> productNoList) {
+	public int deleteProduct(Long no) {
 
-		return sqlSession.update("product.deleteVo",productNoList);
+		return sqlSession.update("product.deleteVo",no);
 	}
 	
 

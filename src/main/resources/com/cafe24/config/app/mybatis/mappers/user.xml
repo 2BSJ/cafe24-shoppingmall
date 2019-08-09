@@ -13,9 +13,11 @@
 	<select id="getAllVo" resultType="uservo">
 		<![CDATA[
 		SELECT no,name,id,reg_date as regDate,phone_number as phoneNumber,age,
+		convert(AES_DECRYPT(email, SHA2('cafe',512)) using utf8) as email,
 		gender,point,ordercount,role
 		
 		FROM user
+		WHERE user_status='y'
 		]]>
 	</select>
 

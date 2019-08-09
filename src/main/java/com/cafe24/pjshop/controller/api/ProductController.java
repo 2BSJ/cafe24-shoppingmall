@@ -55,8 +55,9 @@ public class ProductController {
 			@RequestParam(required=false) String titleStatus) {
 		
 		List<ProductVo> productList = productService.getList(name,categoryNo,specialStatus,titleStatus);
-		if(!productList.isEmpty())
+		if(!productList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productList));
+		}
 		else
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품목록 조회에 실패하였습니다"));
 	}

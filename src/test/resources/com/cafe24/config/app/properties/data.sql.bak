@@ -23,12 +23,6 @@ INSERT
 								ifnull(MAX(tmp.group_no)+1, 1) 
 								from category tmp));
 
-INSERT 
-	INTO category
-		VALUES(null, '신발', 1, (select 
-								ifnull(MAX(tmp.group_no)+1, 1) 
-								from category tmp));
-
 /* Admin Product Data*/
 /* 기본 상품 값 추가 */
 INSERT
@@ -50,27 +44,6 @@ INSERT
 			   now(),
 			   'y',
 			   1
-			   );
-
-INSERT
-	INTO product
-		VALUES(null,
-			   '아디다스 팔콘 v201',
-			   '아디다스 팔콘 제품입니당.',
-			   '<div><span>아디다스에서 나온 어쩌구저쩌구 설명이 나오는 그런그런설명</span></div>',
-			   '캐나다',
-			   0,
-			   180000,
-			   10000,
-			   'y',
-			   'y',
-			   'n',
-			   'y',
-			   'n',
-			   now(),
-			   now(),
-			   'y',
-			   2
 			   );
 /*상품의 옵션*/
 INSERT
@@ -102,7 +75,7 @@ INSERT
 INSERT
 	INTO cafe24.image
 		VALUES(null,
-			   'nike.png',
+			   '201907201400.jpg',
 			   '/img',
 			   'y',
 			   1);
@@ -114,22 +87,6 @@ INSERT
 			   '/img',
 			   'n',
 			   1);
-			   
-INSERT
-	INTO cafe24.image
-		VALUES(null,
-			   'falcon.jpg',
-			   '/img',
-			   'y',
-			   2);
-			   
-INSERT
-	INTO cafe24.image
-		VALUES(null,
-			   '201907201401.jpg',
-			   '/img',
-			   'n',
-			   2);
 			   
 /* cart 데이터 */
 			   
