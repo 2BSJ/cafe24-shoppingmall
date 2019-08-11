@@ -107,16 +107,15 @@ public class UserController {
 	@ApiOperation(value="회원정보수정", notes ="회원정보수정 API")
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modify(
-			@RequestBody @Valid UserVo userVo,
-			BindingResult bindingResult){
+			@RequestBody UserVo userVo){
 		
 		//password,email,address,phoneNumber 변경가능
-		if( bindingResult.hasErrors()) {
-			List<ObjectError> list = bindingResult.getAllErrors();
-			for(ObjectError error : list) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
-			}
-		}
+//		if( bindingResult.hasErrors()) {
+//			List<ObjectError> list = bindingResult.getAllErrors();
+//			for(ObjectError error : list) {
+//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+//			}
+//		}
 		
 		if(userService.modify(userVo)==1) {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));

@@ -23,6 +23,11 @@ public class AdminUserService {
 		return userDao.deleteUser(no);
 	}
 
+	public UserVo userDetail(Long no) {
+		
+		return userDao.userDetail(no);
+	}
+
 	
 
 

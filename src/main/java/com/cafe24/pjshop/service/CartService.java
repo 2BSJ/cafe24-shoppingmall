@@ -23,26 +23,26 @@ public class CartService {
 		return cartDao.getList(userNo);
 	}
 	
-	public int deleteProduct(List<Long> productNoList) {
+	public int deleteProduct(Long no) {
 		
-		if(productNoList.isEmpty()) {
-			return 400;
-		}
-		else {
-			int result = cartDao.deleteProduct(productNoList);
+		
+		
+			int result = cartDao.deleteProduct(no);
 			return result;
-		}
+		
 
 	}
 
-	public int modifyCart(List<CartVo> cartList) {
+	public int modifyCart(CartVo cartVo) {
 
-		if(cartList.isEmpty()) {
-			return 400;
-		}
-		else {
-			int result = cartDao.modifyProduct(cartList);
+
+			int result = cartDao.modifyProduct(cartVo);
 			return result;
-		}
+
+	}
+
+	public List<CartVo> getAllList() {
+
+		return cartDao.getAllList();
 	}
 }

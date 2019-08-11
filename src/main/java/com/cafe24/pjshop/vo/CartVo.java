@@ -1,7 +1,5 @@
 package com.cafe24.pjshop.vo;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
@@ -13,10 +11,14 @@ public class CartVo {
 	private Long optionNo;
 	private Long memberNo;
 	
-	private String value;
+	private String optionName;
 	private int optionPrice;
 	
-	private String name;
-	private int price;
+	private String productName;
+	private int productPrice;
+	
+	private String imageName;
+	
+	private String userName;
 
 }

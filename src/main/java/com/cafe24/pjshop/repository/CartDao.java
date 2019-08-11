@@ -19,13 +19,17 @@ public class CartDao {
 	public List<CartVo> getList(Long userNo) {
 		return sqlSession.selectList("cart.getVoByUserNo",userNo);
 	}
-	public int deleteProduct(List<Long> productNoList) {
-		return sqlSession.delete("cart.deleteVo",productNoList);
+	public int deleteProduct(Long no) {
+		return sqlSession.delete("cart.deleteVo",no);
 		
 	}
-	public int modifyProduct(List<CartVo> cartList) {
+	public int modifyProduct(CartVo cartVo) {
 
-		return sqlSession.update("cart.modifyVo",cartList);
+		return sqlSession.update("cart.modifyVo",cartVo);
+	}
+	public List<CartVo> getAllList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("cart.getVo");
 	}
 
 }

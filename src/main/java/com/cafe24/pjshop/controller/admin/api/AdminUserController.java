@@ -48,4 +48,16 @@ public class AdminUserController {
 			
 	}
 	
+	@ApiOperation(value="유저 상세정보보기", notes ="유저 상세정보보기 API")
+	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> userDetail(
+			@PathVariable(value="no") Long no) {
+		UserVo userVo = adminUserService.userDetail(no);
+		if(userVo != null)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(userVo));
+		else
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("유저 상세정보 보기에 실패했습니다"));
+			
+	}
+	
 }

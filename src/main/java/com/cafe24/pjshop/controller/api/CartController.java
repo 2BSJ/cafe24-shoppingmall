@@ -60,14 +60,28 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
 		
 	}
+	//장바구니 모든 리스트 불러오기
+	@ApiOperation(value="장바구니 모든리스트 불러오기", notes ="장바구니 모든리스트 불러오기 API")
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> getAllCartList() {
+		
+		
+		List<CartVo> cartList = cartService.getAllList();
+		if(cartList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
+		}
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
+		
+	}
 	
 	@ApiOperation(value="장바구니 상품 수량수정", notes ="장바구니 상품 수량 수정 API")
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyCart(
-			@RequestBody List<CartVo> cartList) {
+			@RequestBody CartVo cartVo) {
 		
 
-		int status = cartService.modifyCart(cartList);
+		int status = cartService.modifyCart(cartVo);
 		if(status == 1)
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 		else if(status == 400)
@@ -77,12 +91,12 @@ public class CartController {
 	}
 	
 	@ApiOperation(value="장바구니 상품 삭제", notes ="장바구니 상품 삭제 API")
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{no}", method = RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteCart(
-			@RequestBody List<Long> productNoList) {
+			@PathVariable(value="no")Long no) {
 		
 
-		int status = cartService.deleteProduct(productNoList);
+		int status = cartService.deleteProduct(no);
 		if(status == 1)
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(true));
 		else if(status == 400)

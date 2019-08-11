@@ -48,8 +48,8 @@
 	
 	<select id="getListBySettingFromAdmin" parameterType="map" resultType="productvo">
 		<![CDATA[
-		SELECT p.*,i.name as titleImageName
-		FROM product p,image i
+		SELECT p.*,i.name as titleImageName,c.name as categoryName
+		FROM product p,image i,category c
 		]]>
 		<where>
 			<if test="name != null">
@@ -76,6 +76,7 @@
 				and p.product_status ='y'
 				and p.no = i.product_no
 				and i.title_status='y'
+				and c.no = p.category_no
 				]]>
 		</where>
 	</select>
