@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.pjshop.dto.JSONResult;
@@ -54,7 +55,7 @@ public class CartController {
 		List<CartVo> cartList = cartService.getList(userNo);
 		
 		if(cartList.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
 		}
 		else
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
@@ -65,14 +66,26 @@ public class CartController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> getAllCartList() {
 		
-		
 		List<CartVo> cartList = cartService.getAllList();
 		if(cartList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
 		}
 		else
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
+	}
+	
+	@ApiOperation(value="관리자 장바구니 검색하기", notes ="관리자 장바구니 검색하기 API")
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> SearchCartList(
+			@RequestParam(value="username", required=false) String userName,
+			@RequestParam(value="productname", required=false) String productName) {
 		
+		List<CartVo> cartList = cartService.searchCartList(userName,productName);
+		if(cartList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("장바구니 리스트 불러오기가 실패했습니다."));
+		}
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(cartList));
 	}
 	
 	@ApiOperation(value="장바구니 상품 수량수정", notes ="장바구니 상품 수량 수정 API")
@@ -104,6 +117,8 @@ public class CartController {
 		else
 			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("상품삭제에 실패하였습니다"));
 	}
+	
+	
 	
 
 }

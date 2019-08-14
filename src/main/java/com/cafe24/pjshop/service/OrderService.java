@@ -24,6 +24,7 @@ public class OrderService {
 			}
 		else {
 			orderDao.reduceStock(orderVo);
+			orderDao.deleteCart(orderVo);
 			return orderDao.addOrderDetail(orderVo);
 		}
 		

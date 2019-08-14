@@ -40,5 +40,9 @@ public class OrderDao {
 	public List<OrderVo> getAdminOrderList(Map<String,Object> map) {
 		return sqlSession.selectList("order.getVoByOption",map);
 	}
+	public void deleteCart(OrderVo orderVo) {
+		
+		sqlSession.delete("order.deleteCart",orderVo);
+	}
 
 }

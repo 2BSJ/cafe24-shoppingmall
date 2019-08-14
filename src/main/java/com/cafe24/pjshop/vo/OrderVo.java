@@ -25,5 +25,5 @@ public class OrderVo {
 	private Long memberNo;
 	private List<CartVo> cartList;
 	private String key = "cafe";
-	
+	private String name;
 }

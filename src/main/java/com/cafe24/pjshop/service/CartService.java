@@ -45,4 +45,8 @@ public class CartService {
 
 		return cartDao.getAllList();
 	}
+
+	public List<CartVo> searchCartList(String userName, String productName) {
+		return cartDao.searchCartList(userName,productName);
+	}
 }

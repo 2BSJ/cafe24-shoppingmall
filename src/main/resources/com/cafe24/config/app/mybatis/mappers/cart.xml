@@ -41,6 +41,35 @@
 		]]>
 	</select>
 	
+	<select id="searchVo" parameterType="map" resultType="cartvo">
+		<![CDATA[
+		SELECT c.no, c.amount, c.non_member_no, c.option_no, c.member_no,u.name as userName,
+			   o.value as optionName, o.price as optionPrice, p.name as productName, p.price as productPrice, i.name as imageName
+		FROM cart c, option o, product p, image i, user u
+		]]>
+		<where>
+			<if test="username != null">
+				<![CDATA[
+				u.name LIKE concat('%',#{username},'%') 
+				]]>
+			</if>
+			<if test="productname != null">
+				<![CDATA[
+				and p.name LIKE concat('%',#{productname},'%')
+				]]>
+			</if>
+				<![CDATA[
+				and c.option_no = o.no 
+				and o.product_no = p.no
+                and i.product_no = p.no
+                and u.no = c.member_no
+                and i.title_status ='y'
+				]]>
+		</where>
+		
+
+	</select>
+	
 	<delete id="deleteVo" parameterType="long">
 		
 		     <![CDATA[

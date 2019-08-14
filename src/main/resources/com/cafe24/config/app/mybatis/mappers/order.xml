@@ -41,6 +41,16 @@
 		</foreach>
 	</insert>
 	
+	<delete id="deleteCart" parameterType='ordervo'>
+		<foreach collection="cartList" item="item"  separator=";">
+			<![CDATA[
+			DELETE 
+			FROM cart
+			WHERE no = #{item.no}
+			]]>	
+		</foreach>
+	</delete>
+	
 	<select id="getVoByUserNo" parameterType='long' resultType="ordervo">
 		SELECT no,cs_status,pay_status,order_status,
 		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
@@ -110,12 +120,12 @@
 	
 		<select id="getVoByOption" parameterType="map" resultType="ordervo">
 		<![CDATA[
-		SELECT no,cs_status,pay_status,order_status,
-		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
-		convert(AES_DECRYPT(home_number, SHA2('cafe', 512)) using utf8) as homeNumber,
-		convert(AES_DECRYPT(phone_number, SHA2('cafe', 512)) using utf8) as phoneNumber,
-		message,member_status,reg_date
-		FROM order_t
+		SELECT o.no,o.cs_status,o.pay_status,o.order_status,
+		convert(AES_DECRYPT(o.address, SHA2('cafe', 512)) using utf8) as address,
+		convert(AES_DECRYPT(o.home_number, SHA2('cafe', 512)) using utf8) as homeNumber,
+		convert(AES_DECRYPT(o.phone_number, SHA2('cafe', 512)) using utf8) as phoneNumber,
+		o.message,o.member_status,o.reg_date,u.name
+		FROM order_t o,user u
 		]]>
 		<where>
 			<if test="memberNo != 0">
@@ -138,6 +148,7 @@
 				and order_status = #{orderStatus}
 				]]>
 			</if>
+			and o.member_no = u.no;
 		</where>
 	</select>
 </mapper>

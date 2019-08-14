@@ -53,7 +53,7 @@ public class UserController {
 		
 		Set<ConstraintViolation<UserVo>> validatorResults = 
 				validator.validateProperty(new UserVo(id), "id"); // 어떤 validate를 만들지 모르니까 스캔을 하게 만들어줌
-		
+		System.out.println("");
 		if (validatorResults.isEmpty() == false) {
 			for (ConstraintViolation<UserVo> validatorResult : validatorResults) {
 				return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail(validatorResult.getMessage()));

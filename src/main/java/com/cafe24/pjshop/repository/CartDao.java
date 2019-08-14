@@ -1,6 +1,8 @@
 package com.cafe24.pjshop.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,13 @@ public class CartDao {
 		return sqlSession.update("cart.modifyVo",cartVo);
 	}
 	public List<CartVo> getAllList() {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("cart.getVo");
+	}
+	public List<CartVo> searchCartList(String userName, String productName) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("username",userName);
+		map.put("productname",productName);
+		return sqlSession.selectList("cart.searchVo",map);
 	}
 
 }
