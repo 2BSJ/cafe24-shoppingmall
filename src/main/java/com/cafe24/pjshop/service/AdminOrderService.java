@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.pjshop.repository.OrderDao;
+import com.cafe24.pjshop.vo.OrderDetailVo;
 import com.cafe24.pjshop.vo.OrderVo;
 
 @Service
@@ -17,7 +18,7 @@ public class AdminOrderService {
 	@Autowired
 	private OrderDao orderDao;
 
-	public OrderVo getDetailList(Long orderNo) {
+	public List<OrderDetailVo> getDetailList(Long orderNo) {
 		return orderDao.getDetailList(orderNo);
 	}
 

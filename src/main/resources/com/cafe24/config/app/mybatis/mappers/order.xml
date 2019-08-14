@@ -62,7 +62,7 @@
 		
 	</select>
 	
-	<select id="getVoByOrderNo" parameterType='long' resultType="ordervo">
+	<select id="getDetailVoByOrderNo" parameterType='long' resultType="ordervo">
 		SELECT no,cs_status,pay_status,order_status,
 		convert(AES_DECRYPT(address, SHA2('cafe', 512)) using utf8) as address,
 		convert(AES_DECRYPT(home_number, SHA2('cafe', 512)) using utf8) as homeNumber,

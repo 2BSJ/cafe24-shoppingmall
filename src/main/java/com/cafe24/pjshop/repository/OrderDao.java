@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.pjshop.vo.OrderDetailVo;
 import com.cafe24.pjshop.vo.OrderVo;
 
 @Repository
@@ -30,8 +31,8 @@ public class OrderDao {
 		
 		return sqlSession.selectList("order.getVoByUserNo",userNo);
 	}
-	public OrderVo getDetailList(Long orderNo) {
-		return sqlSession.selectOne("order.getVoByOrderNo",orderNo);
+	public List<OrderDetailVo> getDetailList(Long orderNo) {
+		return sqlSession.selectList("order.getDetailVoByOrderNo",orderNo);
 	}
 	public int modifyOrder(OrderVo orderVo) {
 

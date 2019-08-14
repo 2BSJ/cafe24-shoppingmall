@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.pjshop.dto.JSONResult;
 import com.cafe24.pjshop.service.AdminOrderService;
+import com.cafe24.pjshop.vo.OrderDetailVo;
 import com.cafe24.pjshop.vo.OrderVo;
-
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,12 +63,12 @@ public class AdminOrderController {
 	public ResponseEntity<JSONResult> getDetailList(
 			@PathVariable(value="no") Long orderNo){
 				
-		OrderVo orderVo = adminOrderService.getDetailList(orderNo);
+		List<OrderDetailVo> detailOrderList = adminOrderService.getDetailList(orderNo);
 		
-		if(orderVo != null)
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(orderVo));
+		if(detailOrderList != null)
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(detailOrderList));
 		else
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("잘못된 요청으로 상품상세정보 조회에 실패하였습니다"));
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.fail("잘못된 요청으로 상품상세정보 조회에 실패하였습니다"));
 				
 	}
 	

@@ -1,13 +1,12 @@
 package com.cafe24.pjshop.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.pjshop.repository.OrderDao;
+import com.cafe24.pjshop.vo.OrderDetailVo;
 import com.cafe24.pjshop.vo.OrderVo;
 
 @Service
@@ -38,7 +37,7 @@ public class OrderService {
 		return orderList;
 	}
 
-	public OrderVo getDetailList(Long orderNo) {
+	public List<OrderDetailVo> getDetailList(Long orderNo) {
 		return orderDao.getDetailList(orderNo);
 	}
 
